@@ -7,6 +7,7 @@ import com.mar.bean.vo.UserLoginVO;
  * @createDate: 2022/4/4
  **/
 
+
 public interface RedisService {
     boolean storeJWT(UserLoginVO userLoginVO);
 }

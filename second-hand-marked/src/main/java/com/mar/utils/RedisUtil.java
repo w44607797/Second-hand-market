@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  **/
 
 @Component
-public class redisUtil {
+public class RedisUtil {
 
 
 }
