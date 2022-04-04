@@ -1,26 +1,70 @@
-2022-04-04 00:00:27.965  INFO 9920 --- [main] com.mar.MainApplication                  : Starting MainApplication using Java 17.0.2 on DESKTOP-2N3PEKS with PID 9920 (E:\ideaprojects\second-hand-marked\second-hand-marked\target\classes started by guokaifeng in E:\ideaprojects\second-hand-marked\second-hand-marked)
-2022-04-04 00:00:27.966  INFO 9920 --- [main] com.mar.MainApplication                  : No active profile set, falling back to default profiles: default
-2022-04-04 00:00:28.221  WARN 9920 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.mar]' package. Please check your configuration.
-2022-04-04 00:00:28.263  INFO 9920 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
-2022-04-04 00:00:28.264  INFO 9920 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
-2022-04-04 00:00:28.269  INFO 9920 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 JDBC repository interfaces.
-2022-04-04 00:00:28.275  INFO 9920 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
-2022-04-04 00:00:28.276  INFO 9920 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2022-04-04 00:00:28.280  INFO 9920 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 0 ms. Found 0 Redis repository interfaces.
-2022-04-04 00:00:28.322  WARN 9920 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.mar]' package. Please check your configuration.
-2022-04-04 00:00:28.515  INFO 9920 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
-2022-04-04 00:00:28.520  INFO 9920 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-04-04 00:00:28.520  INFO 9920 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.56]
-2022-04-04 00:00:28.573  INFO 9920 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-04-04 00:00:28.573  INFO 9920 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 581 ms
-2022-04-04 00:00:28.759  INFO 9920 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2022-04-04 00:00:29.149  INFO 9920 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2022-04-04 00:00:29.385  INFO 9920 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
-2022-04-04 00:00:29.391  INFO 9920 --- [main] com.mar.MainApplication                  : Started MainApplication in 1.637 seconds (JVM running for 1.985)
-2022-04-04 00:00:39.876  INFO 9920 --- [http-nio-8080-exec-1] o.apache.tomcat.util.http.parser.Cookie  : A cookie header was received [1647170875; _ga=GA1.1.2131883943.1647672916] that contained an invalid cookie. That cookie will be ignored.
- Note: further occurrences of this error will be logged at DEBUG level.
-2022-04-04 00:00:39.880  INFO 9920 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-04-04 00:00:39.880  INFO 9920 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-04-04 00:00:39.880  INFO 9920 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
-2022-04-04 00:00:43.035  INFO 9920 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2022-04-04 00:00:43.253  INFO 9920 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-04-05 00:15:33.379  INFO 27536 --- [main] com.mar.MainApplication                  : Starting MainApplication using Java 17.0.2 on DESKTOP-2N3PEKS with PID 27536 (E:\ideaprojects\second-hand-marked\second-hand-marked\target\classes started by guokaifeng in E:\ideaprojects\second-hand-marked\second-hand-marked)
+2022-04-05 00:15:33.382  INFO 27536 --- [main] com.mar.MainApplication                  : No active profile set, falling back to default profiles: default
+2022-04-05 00:15:33.762  INFO 27536 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-05 00:15:33.770  INFO 27536 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-04-05 00:15:33.777  INFO 27536 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 0 JDBC repository interfaces.
+2022-04-05 00:15:33.784  INFO 27536 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-05 00:15:33.785  INFO 27536 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-04-05 00:15:33.791  INFO 27536 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
+2022-04-05 00:15:34.075  INFO 27536 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-04-05 00:15:34.081  INFO 27536 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-04-05 00:15:34.081  INFO 27536 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.56]
+2022-04-05 00:15:34.132  INFO 27536 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-04-05 00:15:34.133  INFO 27536 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 726 ms
+2022-04-05 00:15:34.206  INFO 27536 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-04-05 00:15:34.581  INFO 27536 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-04-05 00:15:35.035  WARN 27536 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8080 is already in use
+2022-04-05 00:15:35.043  INFO 27536 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-04-05 00:15:35.104  INFO 27536 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-04-05 00:15:35.106  INFO 27536 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2022-04-05 00:15:35.113  INFO 27536 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2022-04-05 00:15:35.120 ERROR 27536 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2022-04-05 00:15:50.321  INFO 10416 --- [main] com.mar.MainApplication                  : Starting MainApplication using Java 17.0.2 on DESKTOP-2N3PEKS with PID 10416 (E:\ideaprojects\second-hand-marked\second-hand-marked\target\classes started by guokaifeng in E:\ideaprojects\second-hand-marked\second-hand-marked)
+2022-04-05 00:15:50.323  INFO 10416 --- [main] com.mar.MainApplication                  : No active profile set, falling back to default profiles: default
+2022-04-05 00:15:50.633  INFO 10416 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-05 00:15:50.633  INFO 10416 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-04-05 00:15:50.639  INFO 10416 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 0 JDBC repository interfaces.
+2022-04-05 00:15:50.645  INFO 10416 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-05 00:15:50.646  INFO 10416 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-04-05 00:15:50.651  INFO 10416 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
+2022-04-05 00:15:50.899  INFO 10416 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-04-05 00:15:50.905  INFO 10416 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-04-05 00:15:50.905  INFO 10416 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.56]
+2022-04-05 00:15:50.953  INFO 10416 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-04-05 00:15:50.953  INFO 10416 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 605 ms
+2022-04-05 00:15:51.024  INFO 10416 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-04-05 00:15:51.416  INFO 10416 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-04-05 00:15:51.819  INFO 10416 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-04-05 00:15:51.825  INFO 10416 --- [main] com.mar.MainApplication                  : Started MainApplication in 1.722 seconds (JVM running for 2.052)
+2022-04-05 00:15:54.422  INFO 10416 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-04-05 00:15:54.643  INFO 10416 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-04-05 00:20:29.113  INFO 21732 --- [main] com.guo.TotalTest                        : Starting TotalTest using Java 17.0.2 on DESKTOP-2N3PEKS with PID 21732 (started by guokaifeng in E:\ideaprojects\second-hand-marked\second-hand-marked)
+2022-04-05 00:20:29.113 DEBUG 21732 --- [main] com.guo.TotalTest                        : Running with Spring Boot v2.6.3, Spring v5.3.15
+2022-04-05 00:20:29.113  INFO 21732 --- [main] com.guo.TotalTest                        : No active profile set, falling back to default profiles: default
+2022-04-05 00:20:29.658  INFO 21732 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-05 00:20:29.659  INFO 21732 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-04-05 00:20:29.668  INFO 21732 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 5 ms. Found 0 JDBC repository interfaces.
+2022-04-05 00:20:29.676  INFO 21732 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-05 00:20:29.677  INFO 21732 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-04-05 00:20:29.690  INFO 21732 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2022-04-05 00:20:30.079  INFO 21732 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-04-05 00:20:30.548  INFO 21732 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-04-05 00:20:31.659  INFO 21732 --- [main] com.guo.TotalTest                        : Started TotalTest in 2.787 seconds (JVM running for 3.282)
+2022-04-05 00:20:32.022 ERROR 21732 --- [main] com.mar.exception.DatabaseException      : 用户数据查询失败
+2022-04-05 00:20:32.047  INFO 21732 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-04-05 00:20:32.259  INFO 21732 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

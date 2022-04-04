@@ -9,8 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 
 public class RedisException extends Exception{
 
-
-
     public RedisException(){}
     public RedisException(String message){
         super(message);
