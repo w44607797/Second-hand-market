@@ -1,4 +1,4 @@
-package com.mar.vo;
+package com.mar.bean.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
