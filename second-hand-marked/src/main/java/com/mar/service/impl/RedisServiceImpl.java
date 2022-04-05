@@ -8,6 +8,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author guokaifeng
  * @createDate: 2022/4/4
@@ -18,11 +20,19 @@ public class RedisServiceImpl implements RedisService {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
+
     @Override
-    public boolean storeJWT(UserLoginVO userLoginVO) {
-        String UserId = userLoginVO.getPhone();
-        String jwt = JWTUtil.getJWT(UserId);
-        redisTemplate.opsForValue().set(jwt,UserId);
-        return true;
+    public void storeCode(String phone,String code) {
+        redisTemplate.opsForValue().set(phone,code,1800,TimeUnit.SECONDS);
+    }
+
+    @Override
+    public String getCode(String phone) {
+       return redisTemplate.opsForValue().get(phone);
+    }
+
+    @Override
+    public void deleteKey(String key) {
+        redisTemplate.delete(key);
     }
 }

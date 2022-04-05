@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 
 public interface UserService {
     ResponseResult userLogin(UserLoginVO userLoginVO) throws DatabaseException;
-    boolean userRegister(UserRegisterVO userRegisterVO);
+    ResponseResult userRegister(UserRegisterVO userRegisterVO);
     String UserBingdingJWT(UserLoginVO userLoginVO) throws RedisException;
     String getLoginCode();
+
+
 }

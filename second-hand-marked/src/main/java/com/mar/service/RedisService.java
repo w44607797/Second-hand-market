@@ -9,5 +9,7 @@ import com.mar.bean.vo.UserLoginVO;
 
 
 public interface RedisService {
-    boolean storeJWT(UserLoginVO userLoginVO);
+    void storeCode(String phone,String code);
+    String getCode(String phone);
+    void deleteKey(String key);
 }

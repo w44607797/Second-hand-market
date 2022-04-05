@@ -1,5 +1,7 @@
 package com.mar.service.impl;
 
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.digest.Digester;
 import com.mar.bean.mapper.UserMapper;
@@ -8,16 +10,21 @@ import com.mar.bean.vo.UserLoginVO;
 import com.mar.bean.vo.UserRegisterVO;
 import com.mar.exception.DatabaseException;
 import com.mar.exception.RedisException;
+import com.mar.service.RedisService;
 import com.mar.service.UserService;
 import com.mar.utils.ExceptionUtil;
 import com.mar.utils.JWTUtil;
 import com.mar.utils.MD5Util;
+import com.mar.utils.SaltUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.management.ObjectName;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -35,6 +42,8 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
     @Autowired
     RedisTemplate redisTemplate;
+    @Autowired
+    RedisService redisService;
 
     @Override
     public ResponseResult userLogin(UserLoginVO userLoginVO) throws DatabaseException {
@@ -48,12 +57,14 @@ public class UserServiceImpl implements UserService {
             map.put("condition","salt");
             salt = userMapper.getParamByPhone(map);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new DatabaseException(ExceptionUtil.DATABASE_MESSAGE,ExceptionUtil.DATABASE_MESSAGE_USER);
         }
         if(password==null||salt==null){
-            throw new DatabaseException(ExceptionUtil.DATABASE_MESSAGE,ExceptionUtil.DATABASE_MESSAGE_USER);
+            return ResponseResult.failed(1,"用户还未注册");
         }
-        String pass = MD5Util.getMD5(userLoginVO.getPassword()+salt);
+        String total = userLoginVO.getPassword()+salt;
+        String pass = MD5Util.getMD5(total);
         if(pass.equals(password)){
             return ResponseResult.success();
         }
@@ -61,8 +72,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean userRegister(UserRegisterVO userRegisterVO) {
-        return false;
+    public ResponseResult userRegister(UserRegisterVO userRegisterVO) {
+        String regCode = userRegisterVO.getCode();
+        String phone = userRegisterVO.getPhone();
+        String salt = SaltUtil.getSalt(4);
+        String total = userRegisterVO.getPassword()+ salt;
+        String resultPassword = MD5Util.getMD5(total);
+        String correctCode = redisService.getCode(phone);
+        if(!regCode.equals(correctCode)){
+            return ResponseResult.failed(900,"验证码错误");
+        }
+        int i = userMapper.registerUser(phone,resultPassword,salt);
+        if(i==0){
+            return ResponseResult.failed(002,"用户已注册");
+        }
+        return ResponseResult.success();
     }
 
     @Override
@@ -81,5 +105,7 @@ public class UserServiceImpl implements UserService {
     public String getLoginCode() {
         return null;
     }
+
+
 
 }
