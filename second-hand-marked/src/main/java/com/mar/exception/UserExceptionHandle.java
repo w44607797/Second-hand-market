@@ -15,6 +15,6 @@ public class UserExceptionHandle {
     @ResponseBody
     @ExceptionHandler(UserException.class)
     public ResponseResult UserException(Exception e){
-        return ResponseResult.failed(0,e.getMessage());
+        return ResponseResult.failed("0",e.getMessage());
     }
 }

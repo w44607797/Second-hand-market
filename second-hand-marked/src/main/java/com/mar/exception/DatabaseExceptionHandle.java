@@ -14,6 +14,6 @@ public class DatabaseExceptionHandle {
     @ResponseBody
     @ExceptionHandler(DatabaseException.class)
     public ResponseResult DatabaseException(DatabaseException e){
-        return ResponseResult.failed(500,e.getMessage());
+        return ResponseResult.failed("500",e.getMessage());
     }
 }

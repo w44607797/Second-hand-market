@@ -14,6 +14,6 @@ public class RedisExceptionHandle {
     @ResponseBody
     @ExceptionHandler(RedisException.class)
     public ResponseResult RedisException(DatabaseException e){
-        return ResponseResult.failed(600,e.getMessage());
+        return ResponseResult.failed("600",e.getMessage());
     }
 }

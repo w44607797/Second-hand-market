@@ -26,11 +26,11 @@ public class TotalTest {
     @Autowired
     RedisService redisService;
 
-    @Test
-    public void demoException() throws DatabaseException {
-        System.out.println("开始抛异常");
-        throw new DatabaseException(ExceptionUtil.DATABASE_MESSAGE,ExceptionUtil.DATABASE_MESSAGE_USER);
-    }
+//    @Test
+//    public void demoException() throws DatabaseException {
+//        System.out.println("开始抛异常");
+//        throw new DatabaseException(ExceptionUtil.DATABASE_MESSAGE,ExceptionUtil.DATABASE_MESSAGE_USER);
+//    }
 
     @Test
     public void demoLogin(){

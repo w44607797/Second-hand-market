@@ -10,6 +10,7 @@ import com.mar.exception.RedisException;
 import com.mar.exception.UserException;
 import com.mar.service.RedisService;
 import com.mar.service.UserService;
+import com.mar.utils.StateEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -65,7 +66,8 @@ public class UserController {
             redisService.storeCode(phone,lineCaptcha.getCode());
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseResult.failed(300,"返回验证码失败");
+            return ResponseResult.failed(StateEnum.SERVICE_ERROR_FAILEDTOGETCODE.getCode(),
+                    StateEnum.SERVICE_ERROR_FAILEDTOGETCODE.getMessage());
         }finally {
             out.close();
         }

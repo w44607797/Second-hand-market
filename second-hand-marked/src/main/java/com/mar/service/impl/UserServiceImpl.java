@@ -12,10 +12,7 @@ import com.mar.exception.DatabaseException;
 import com.mar.exception.RedisException;
 import com.mar.service.RedisService;
 import com.mar.service.UserService;
-import com.mar.utils.ExceptionUtil;
-import com.mar.utils.JWTUtil;
-import com.mar.utils.MD5Util;
-import com.mar.utils.SaltUtil;
+import com.mar.utils.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -58,17 +55,20 @@ public class UserServiceImpl implements UserService {
             salt = userMapper.getParamByPhone(map);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new DatabaseException(ExceptionUtil.DATABASE_MESSAGE,ExceptionUtil.DATABASE_MESSAGE_USER);
+            throw new DatabaseException(StateEnum.DATABASE_ERROR_MESSAGE.getMessage(),
+                    StateEnum.DATABASE_ERROR_FAILEDTOGETUSER.getMessage());
         }
         if(password==null||salt==null){
-            return ResponseResult.failed(1,"用户还未注册");
+            return ResponseResult.failed(StateEnum.USER_ERROR_NOREGISTER.getCode(),
+                    StateEnum.USER_ERROR_NOREGISTER.getMessage());
         }
         String total = userLoginVO.getPassword()+salt;
         String pass = MD5Util.getMD5(total);
         if(pass.equals(password)){
             return ResponseResult.success();
         }
-        return ResponseResult.failed(101,"用户账号或者密码错误");
+        return ResponseResult.failed(StateEnum.USER_ERROR_WRONGPASSWORD.getCode(),
+                StateEnum.USER_ERROR_WRONGPASSWORD.getMessage());
     }
 
     @Override
@@ -80,11 +80,13 @@ public class UserServiceImpl implements UserService {
         String resultPassword = MD5Util.getMD5(total);
         String correctCode = redisService.getCode(phone);
         if(!regCode.equals(correctCode)){
-            return ResponseResult.failed(900,"验证码错误");
+            return ResponseResult.failed(StateEnum.USER_ERROR_WRONGCODE.getCode(),
+                    StateEnum.USER_ERROR_WRONGCODE.getMessage());
         }
         int i = userMapper.registerUser(phone,resultPassword,salt);
         if(i==0){
-            return ResponseResult.failed(002,"用户已注册");
+            return ResponseResult.failed(StateEnum.USER_ERROR_HASBEENREGISTER.getCode(),
+                    StateEnum.USER_ERROR_HASBEENREGISTER.getMessage());
         }
         return ResponseResult.success();
     }
