@@ -35,14 +35,22 @@ public class ResponseResult<T> implements Serializable {
         responseResult.setCode("200");
         return responseResult;
     }
-    public static <T> ResponseResult<T> message(String message){
+
+    public static <T> ResponseResult<T> success(String message){
         ResponseResult<T> responseResult = new ResponseResult<>();
         responseResult.setOk(true);
         responseResult.setCode("200");
         responseResult.setMessage(message);
         return responseResult;
     }
-
+    public static <T> ResponseResult<T> success(T t,String message){
+        ResponseResult<T> responseResult = new ResponseResult<>();
+        responseResult.setOk(true);
+        responseResult.setCode("200");
+        responseResult.setData(t);
+        responseResult.setMessage(message);
+        return responseResult;
+    }
     public static <T> ResponseResult<T> failed(String code,String error){
         ResponseResult<T> responseResult = new ResponseResult<>();
         responseResult.setCode(code);
