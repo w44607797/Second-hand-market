@@ -16,10 +16,11 @@ public class CommodityShopDO {
     private String id;
     private String skuId;
     private String userId;
+    private String cartPrice;
     private String skuNum;
-    private String trademark;
+    private String skuName;
     private String imgUrl;
     private String isChecked;
     private String skuPrice;
-
+    private String quantity;
 }

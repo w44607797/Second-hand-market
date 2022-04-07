@@ -12,7 +12,7 @@
     </select>
     <select id="getShopCartListByChecked" resultType="com.mar.bean.dao.ShopCartDAO">
         select * from shop_cart where 1=1
-        <trim prefixOverrides="and" suffixOverrides=",">
+        <trim prefix="and" suffixOverrides=",">
             and is_checked = #{isChecked}
         </trim>
     </select>

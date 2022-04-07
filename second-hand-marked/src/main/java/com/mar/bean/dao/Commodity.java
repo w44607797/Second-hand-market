@@ -18,6 +18,8 @@ public class Commodity implements Serializable {
     private String id;
     private String skuId;
     private String skuNum;
+    private String skuPrice;
+    private String skuName;
     private String categoryName;
     private String category1Id;
     private String category1Name;
@@ -26,7 +28,7 @@ public class Commodity implements Serializable {
     private String category3Id;
     private String category3Name;
     private String keyword;
-//    private String props;
+    private String props;
     private String trademark;
     private String imgUrl;
     private String order;

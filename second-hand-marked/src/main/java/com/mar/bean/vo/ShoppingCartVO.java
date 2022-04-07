@@ -24,4 +24,5 @@ public class ShoppingCartVO implements Serializable {
     private String skuName;
     private String isChecked;
     private String skuPrice;
+    private String quantity;
 }

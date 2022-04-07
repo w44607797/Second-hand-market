@@ -54,5 +54,16 @@ public class TotalTest {
         Map<Object, Object> objectObjectMap = redisUtils.hGetAll("17759048528:cart");
 
     }
+    @Test
+    public void getMapKey(){
+        Map<Object, Object> skuIdMap = redisUtils.hGetAll("17759048528:cart");
+        for (Object o : skuIdMap.keySet()) {
+            System.out.println((String) o);
+            int o1 = Integer.parseInt((String) skuIdMap.get(o));
+            System.out.println(o1);
+
+        }
+
+    }
 
 }

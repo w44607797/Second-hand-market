@@ -26,4 +26,9 @@ public class ShopController {
         ShoppingCartVO[] shoppingCartByPhone = shopService.getShoppingCartByPhone(phone);
         return ResponseResult.success(shoppingCartByPhone);
     }
+    @GetMapping("/cart/cartList")
+    public ResponseResult GetCartList(){
+        ShoppingCartVO[] shoppingCartByPhone = shopService.getShoppingCartByPhone("17759048528");
+        return ResponseResult.success(shoppingCartByPhone,"成功");
+    }
 }
