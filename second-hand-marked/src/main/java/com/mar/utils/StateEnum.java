@@ -15,6 +15,7 @@ public enum StateEnum {
     USER_ERROR_WRONGCODE("004","登录验证码出错"),
 
 
+
     SERVICE_ERROR_FAILEDTOGETCODE("300","返回验证码失败"),
 
 

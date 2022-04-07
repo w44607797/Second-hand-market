@@ -14,4 +14,5 @@ public class basicTest {
         String md5 = MD5Util.getMD5("123456salt");
         System.out.println(md5);
     }
+
 }

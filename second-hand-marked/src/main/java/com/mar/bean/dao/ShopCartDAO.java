@@ -1,5 +1,6 @@
-package com.mar.bean.vo;
+package com.mar.bean.dao;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,10 +11,12 @@ import java.io.Serializable;
  * @author guokaifeng
  * @createDate: 2022/4/6
  **/
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShoppingCartVO implements Serializable {
+@TableName("shop_cart")
+public class ShopCartDAO implements Serializable {
     private static final long serialVersionUID = 1L;
     private String id;
     private String userId;

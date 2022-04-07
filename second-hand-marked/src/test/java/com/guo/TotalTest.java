@@ -5,13 +5,15 @@ import com.mar.bean.vo.UserLoginVO;
 import com.mar.exception.DatabaseException;
 import com.mar.service.RedisService;
 import com.mar.service.UserService;
-import com.mar.utils.ExceptionUtil;
+import com.mar.utils.RedisUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Map;
 
 /**
  * @author guokaifeng
@@ -25,6 +27,9 @@ public class TotalTest {
 
     @Autowired
     RedisService redisService;
+
+    @Autowired
+    RedisUtils redisUtils;
 
 //    @Test
 //    public void demoException() throws DatabaseException {
@@ -42,6 +47,12 @@ public class TotalTest {
     @Test
     public void setCode(){
         redisService.storeCode("17759048528","1111");
+    }
+
+    @Test
+    public void getAllCart(){
+        Map<Object, Object> objectObjectMap = redisUtils.hGetAll("17759048528:cart");
+
     }
 
 }

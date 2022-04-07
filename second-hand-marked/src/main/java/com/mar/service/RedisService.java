@@ -12,4 +12,6 @@ public interface RedisService {
     void storeCode(String phone,String code);
     String getCode(String phone);
     void deleteKey(String key);
+    boolean checkExist(String key);
+
 }

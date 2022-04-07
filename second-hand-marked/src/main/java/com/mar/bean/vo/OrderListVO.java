@@ -1,13 +1,21 @@
 package com.mar.bean.vo;
 
 import com.mar.bean.dto.OrderCommitDTO;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * @author guokaifeng
  * @createDate: 2022/4/6
  **/
-
-public class OrderListVO {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderListVO implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String id;
     private String consignee;
     private String consigneeTel;

@@ -1,27 +1,25 @@
-package com.mar.bean.vo;
+package com.mar.bean.doo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 /**
  * @author guokaifeng
- * @createDate: 2022/4/6
+ * @createDate: 2022/4/7
  **/
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShoppingCartVO implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class CommodityShopDO {
     private String id;
-    private String userId;
     private String skuId;
-    private String cartPrice;
+    private String userId;
     private String skuNum;
+    private String trademark;
     private String imgUrl;
-    private String skuName;
     private String isChecked;
     private String skuPrice;
+
 }

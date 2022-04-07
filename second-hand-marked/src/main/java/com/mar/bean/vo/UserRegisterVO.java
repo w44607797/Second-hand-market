@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @author guokaifeng
@@ -17,7 +18,8 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRegisterVO {
+public class UserRegisterVO implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Min(value = 0,message = "用户的id不符合格式")
     @NotEmpty(message = "用户id不能为空")
     private String phone;
