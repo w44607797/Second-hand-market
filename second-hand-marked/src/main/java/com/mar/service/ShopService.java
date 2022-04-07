@@ -1,6 +1,7 @@
 package com.mar.service;
 
 import com.mar.bean.vo.ShoppingCartVO;
+import com.mar.exception.TotalException;
 
 import java.util.List;
 
@@ -12,5 +13,5 @@ import java.util.List;
 public interface ShopService {
     ShoppingCartVO[] getShoppingCartByPhone(String phone);
     ShoppingCartVO[] getShoppingCartByChecked(String isChecked);
-    void addToShoppingCart(String token,String skuId,String skuNum);
+    void addToShoppingCart(String token,String skuId,String skuNum) throws TotalException;
 }

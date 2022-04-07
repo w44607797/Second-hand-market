@@ -16,4 +16,5 @@
             and is_checked = #{isChecked}
         </trim>
     </select>
+
 </mapper>

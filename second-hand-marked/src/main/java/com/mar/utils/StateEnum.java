@@ -14,7 +14,7 @@ public enum StateEnum {
     USER_ERROR_WRONGPASSWORD("003","用户密码错误"),
     USER_ERROR_WRONGCODE("004","登录验证码出错"),
 
-
+    SHOP_ERROR_FAILTOADDCART("400","商品数量不能再减啦"),
 
     SERVICE_ERROR_FAILEDTOGETCODE("300","返回验证码失败"),
 
