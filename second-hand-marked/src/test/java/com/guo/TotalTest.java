@@ -2,7 +2,6 @@ package com.guo;
 
 import com.mar.MainApplication;
 import com.mar.bean.vo.UserLoginVO;
-import com.mar.exception.DatabaseException;
 import com.mar.exception.TotalException;
 import com.mar.service.RedisService;
 import com.mar.service.UserService;
@@ -34,7 +33,7 @@ public class TotalTest {
     RedisUtils redisUtils;
 
     @Test
-    public void demoException() throws DatabaseException, TotalException {
+    public void demoException() throws TotalException {
         System.out.println("开始抛异常");
         throw new TotalException(StateEnum.SHOP_ERROR_FAILTOADDCART.getCode(),
                 StateEnum.SHOP_ERROR_FAILTOADDCART.getMessage(),

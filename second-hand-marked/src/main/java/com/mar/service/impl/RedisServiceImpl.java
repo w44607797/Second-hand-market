@@ -27,12 +27,12 @@ public class RedisServiceImpl implements RedisService {
 
     @Override
     public void storeCode(String phone,String code) {
-        redisTemplate.opsForValue().set(phone,code,1800,TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(phone+":code",code,1800,TimeUnit.SECONDS);
     }
 
     @Override
     public String getCode(String phone) {
-       return redisTemplate.opsForValue().get(phone);
+       return redisTemplate.opsForValue().get(phone+":code");
     }
 
     @Override
@@ -43,5 +43,16 @@ public class RedisServiceImpl implements RedisService {
     @Override
     public boolean checkExist(String key) {
         return redisUtils.hasKey(key);
+    }
+
+    /**
+     * phone:permission
+     * @param phone
+     * @param token
+     */
+
+    @Override
+    public void setToken(String phone,String token) {
+        redisTemplate.opsForValue().set(token,phone,1800,TimeUnit.SECONDS);
     }
 }

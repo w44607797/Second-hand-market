@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService {
         String phone = userLoginVO.getPhone();
         String jwt = JWTUtil.getJWT(phone);
         try {
-            redisTemplate.opsForValue().set(phone,jwt,1800, TimeUnit.SECONDS);
+            redisService.setToken(phone,jwt);
         } catch (Exception e) {
             throw new TotalException(StateEnum.USER_ERROR_FAILEDTOBINGDINGJWT.getCode(),
                     StateEnum.USER_ERROR_FAILEDTOBINGDINGJWT.getMessage(),

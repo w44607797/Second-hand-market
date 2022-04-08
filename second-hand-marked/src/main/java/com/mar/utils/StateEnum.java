@@ -15,7 +15,8 @@ public enum StateEnum {
     USER_ERROR_WRONGCODE("004","登录验证码出错"),
     USER_ERROR_FAILEDTOBINGDINGJWT("005","用户绑定JWT失败"),
     USER_ERROR_ERRORFORMAT("006","数据校验出错"),
-
+    USER_ERROR_NOLOGIN("007","用户还没有登录"),
+    USER_ERROR_WRONGJWT("008","用户身份过期"),
 
     SHOP_ERROR_FAILTOADDCART("400","加购数量不能再减啦"),
 

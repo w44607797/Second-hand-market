@@ -13,5 +13,6 @@ public interface RedisService {
     String getCode(String phone);
     void deleteKey(String key);
     boolean checkExist(String key);
+    void setToken(String phone,String token);
 
 }

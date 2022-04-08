@@ -8,6 +8,7 @@ import com.mar.bean.vo.UserRegisterVO;
 import com.mar.exception.TotalException;
 import com.mar.service.RedisService;
 import com.mar.service.UserService;
+import com.mar.utils.RedisUtils;
 import com.mar.utils.StateEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -31,6 +32,8 @@ public class UserController {
     UserService userService;
     @Autowired
     RedisService redisService;
+    @Autowired
+    RedisUtils redisUtils;
 
     @PostMapping("/passport/login")
     public ResponseResult<String> userLogin(@Valid UserLoginVO userLoginVO, BindingResult bindingResult) throws TotalException {
@@ -47,6 +50,15 @@ public class UserController {
         responseResult.setData(s);
         return responseResult;
     }
+
+    /**
+     * 用户注册
+     * @param userRegisterVO
+     * @param bindingResult
+     * @return
+     * @throws TotalException
+     */
+
     @PostMapping("/passport/register")
     public ResponseResult userRegister(@Valid UserRegisterVO userRegisterVO, BindingResult bindingResult) throws TotalException {
         if (bindingResult.hasErrors()) {
@@ -55,6 +67,14 @@ public class UserController {
         }
         return userService.userRegister(userRegisterVO);
     }
+
+    /**
+     *
+     * @param response
+     * @param phone
+     * @return 验证码图片
+     * @throws IOException
+     */
 
     @GetMapping("/passport/sendCode/{phone}")
     public ResponseResult getVertifyCode(HttpServletResponse response, @PathVariable String phone) throws IOException {
@@ -74,7 +94,13 @@ public class UserController {
     }
     @GetMapping("/passport/logout/{phone}")
     public ResponseResult userLogout(@PathVariable String phone){
-        redisService.deleteKey(phone);
+//        redisService.deleteKey(phone);
+        redisUtils.delete(phone);
         return ResponseResult.success();
+    }
+
+    @GetMapping("/nologin")
+    public ResponseResult userNoLoginPage(TotalException totalException) throws TotalException {
+        throw totalException;
     }
 }
