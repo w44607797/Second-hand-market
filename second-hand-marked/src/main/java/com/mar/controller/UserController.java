@@ -5,9 +5,7 @@ import cn.hutool.captcha.LineCaptcha;
 import com.mar.bean.vo.ResponseResult;
 import com.mar.bean.vo.UserLoginVO;
 import com.mar.bean.vo.UserRegisterVO;
-import com.mar.exception.DatabaseException;
-import com.mar.exception.RedisException;
-import com.mar.exception.UserException;
+import com.mar.exception.TotalException;
 import com.mar.service.RedisService;
 import com.mar.service.UserService;
 import com.mar.utils.StateEnum;
@@ -35,12 +33,13 @@ public class UserController {
     RedisService redisService;
 
     @PostMapping("/passport/login")
-    public ResponseResult<String> userLogin(@Valid UserLoginVO userLoginVO, BindingResult bindingResult) throws UserException, DatabaseException, RedisException {
+    public ResponseResult<String> userLogin(@Valid UserLoginVO userLoginVO, BindingResult bindingResult) throws TotalException {
         if (bindingResult.hasErrors()) {
             String defaultMessage = bindingResult.getAllErrors().get(0).getDefaultMessage();
-            throw new UserException(defaultMessage);
+            throw new TotalException(StateEnum.USER_ERROR_ERRORFORMAT.getCode(),
+                    defaultMessage,StateEnum.USER_ERROR_ERRORFORMAT.getMessage());
         }
-        ResponseResult<String> responseResult = userService.userLogin(userLoginVO);
+        ResponseResult responseResult = userService.userLogin(userLoginVO);
         if(!responseResult.isOk()){
             return responseResult;
         }
@@ -49,10 +48,10 @@ public class UserController {
         return responseResult;
     }
     @PostMapping("/passport/register")
-    public ResponseResult userRegister(@Valid UserRegisterVO userRegisterVO, BindingResult bindingResult) throws UserException {
+    public ResponseResult userRegister(@Valid UserRegisterVO userRegisterVO, BindingResult bindingResult) throws TotalException {
         if (bindingResult.hasErrors()) {
             String defaultMessage = bindingResult.getAllErrors().get(0).getDefaultMessage();
-            throw new UserException(defaultMessage);
+            throw new TotalException(defaultMessage);
         }
         return userService.userRegister(userRegisterVO);
     }

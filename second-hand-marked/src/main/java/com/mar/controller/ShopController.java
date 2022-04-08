@@ -2,7 +2,9 @@ package com.mar.controller;
 
 import com.mar.bean.vo.ResponseResult;
 import com.mar.bean.vo.ShoppingCartVO;
+import com.mar.exception.TotalException;
 import com.mar.service.ShopService;
+import com.mar.utils.StateEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +29,7 @@ public class ShopController {
         return ResponseResult.success(shoppingCartByPhone);
     }
     @GetMapping("/cart/cartList")
-    public ResponseResult GetCartList(){
+    public ResponseResult GetCartList() throws TotalException {
         ShoppingCartVO[] shoppingCartByPhone = shopService.getShoppingCartByPhone("17759048528");
         return ResponseResult.success(shoppingCartByPhone,"成功");
     }

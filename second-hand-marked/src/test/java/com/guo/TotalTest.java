@@ -3,9 +3,11 @@ package com.guo;
 import com.mar.MainApplication;
 import com.mar.bean.vo.UserLoginVO;
 import com.mar.exception.DatabaseException;
+import com.mar.exception.TotalException;
 import com.mar.service.RedisService;
 import com.mar.service.UserService;
 import com.mar.utils.RedisUtils;
+import com.mar.utils.StateEnum;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +33,13 @@ public class TotalTest {
     @Autowired
     RedisUtils redisUtils;
 
-//    @Test
-//    public void demoException() throws DatabaseException {
-//        System.out.println("开始抛异常");
-//        throw new DatabaseException(ExceptionUtil.DATABASE_MESSAGE,ExceptionUtil.DATABASE_MESSAGE_USER);
-//    }
+    @Test
+    public void demoException() throws DatabaseException, TotalException {
+        System.out.println("开始抛异常");
+        throw new TotalException(StateEnum.SHOP_ERROR_FAILTOADDCART.getCode(),
+                StateEnum.SHOP_ERROR_FAILTOADDCART.getMessage(),
+                StateEnum.SHOP_ERROR_FAILTOADDCART.getMessage());
+    }
 
     @Test
     public void demoLogin(){

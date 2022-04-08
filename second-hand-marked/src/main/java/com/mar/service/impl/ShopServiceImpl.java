@@ -110,9 +110,9 @@ public class ShopServiceImpl implements ShopService {
             return;
         }
         if(num<=0){
-            TotalException totalException = new TotalException(StateEnum.SHOP_ERROR_FAILTOADDCART.getMessage());
-            totalException.setCode(StateEnum.SHOP_ERROR_FAILTOADDCART.getCode());
-            throw totalException;
+            throw new TotalException(StateEnum.SHOP_ERROR_FAILTOADDCART.getCode(),
+                    StateEnum.SHOP_ERROR_FAILTOADDCART.getMessage(),
+                    StateEnum.SHOP_ERROR_FAILTOADDCART.getMessage());
         }
         redisUtils.hPut(key,skuId,skuNum);
     }

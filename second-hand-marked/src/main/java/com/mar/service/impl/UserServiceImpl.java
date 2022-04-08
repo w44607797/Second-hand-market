@@ -8,8 +8,7 @@ import com.mar.bean.mapper.UserMapper;
 import com.mar.bean.vo.ResponseResult;
 import com.mar.bean.vo.UserLoginVO;
 import com.mar.bean.vo.UserRegisterVO;
-import com.mar.exception.DatabaseException;
-import com.mar.exception.RedisException;
+import com.mar.exception.TotalException;
 import com.mar.service.RedisService;
 import com.mar.service.UserService;
 import com.mar.utils.*;
@@ -43,7 +42,7 @@ public class UserServiceImpl implements UserService {
     RedisService redisService;
 
     @Override
-    public ResponseResult userLogin(UserLoginVO userLoginVO) throws DatabaseException {
+    public ResponseResult userLogin(UserLoginVO userLoginVO) throws TotalException {
         Map<String, Object> map = new HashMap();
         map.put("condition","password");
         map.put("phone",userLoginVO.getPhone());
@@ -55,7 +54,8 @@ public class UserServiceImpl implements UserService {
             salt = userMapper.getParamByPhone(map);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new DatabaseException(StateEnum.DATABASE_ERROR_MESSAGE.getMessage(),
+            throw new TotalException(StateEnum.DATABASE_ERROR_MESSAGE.getCode(),
+                    StateEnum.DATABASE_ERROR_MESSAGE.getMessage(),
                     StateEnum.DATABASE_ERROR_FAILEDTOGETUSER.getMessage());
         }
         if(password==null||salt==null){
@@ -92,13 +92,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String UserBingdingJWT(UserLoginVO userLoginVO) throws RedisException {
+    public String UserBingdingJWT(UserLoginVO userLoginVO) throws TotalException {
         String phone = userLoginVO.getPhone();
         String jwt = JWTUtil.getJWT(phone);
         try {
             redisTemplate.opsForValue().set(phone,jwt,1800, TimeUnit.SECONDS);
         } catch (Exception e) {
-            throw new RedisException("用户绑定JWT失败");
+            throw new TotalException(StateEnum.USER_ERROR_FAILEDTOBINGDINGJWT.getCode(),
+                    StateEnum.USER_ERROR_FAILEDTOBINGDINGJWT.getMessage(),
+                    StateEnum.USER_ERROR_FAILEDTOBINGDINGJWT.getMessage());
         }
         return jwt;
     }
