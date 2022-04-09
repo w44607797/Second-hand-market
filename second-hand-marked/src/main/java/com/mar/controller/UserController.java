@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -100,7 +101,13 @@ public class UserController {
     }
 
     @GetMapping("/nologin")
-    public ResponseResult userNoLoginPage(TotalException totalException) throws TotalException {
-        throw totalException;
+    public ResponseResult userNoLoginPage(HttpServletRequest httpServletRequest) throws TotalException {
+            Object attribute = httpServletRequest.getAttribute("filter.error");
+            TotalException totalException = (TotalException) attribute;
+            if(totalException!=null){
+                throw totalException;
+            }
+            return ResponseResult.failed(StateEnum.USER_ERROR_NOLOGIN.getCode(),
+                    StateEnum.USER_ERROR_NOLOGIN.getMessage());
     }
 }

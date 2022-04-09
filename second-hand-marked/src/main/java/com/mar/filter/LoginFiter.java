@@ -19,19 +19,23 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
-@WebFilter(urlPatterns = "/*",filterName = "LoginFiter")
+@WebFilter(urlPatterns = {"/api/user/passport/logout/*","/api/cart/*"},filterName = "LoginFiter")
 @Slf4j
 public class LoginFiter implements Filter{
 
     @Autowired
     RedisTemplate redisTemplate;
 
+
     public void init(FilterConfig config) throws ServletException {
 //        log.info("过滤器初始化");
     }
 
-    @SneakyThrows
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest)request;
@@ -39,18 +43,22 @@ public class LoginFiter implements Filter{
         String url = httpServletRequest.getRequestURI();
         String token = httpServletRequest.getHeader("token");
         String userTempId = httpServletRequest.getHeader("token");
-        if(token==null || userTempId==null){
+        System.out.println(url);
+        if(token==null || userTempId==null) {
             TotalException totalException = new TotalException(StateEnum.USER_ERROR_NOLOGIN.getCode(),
                     StateEnum.USER_ERROR_NOLOGIN.getMessage(),
                     StateEnum.USER_ERROR_NOLOGIN.getMessage());
-//            httpServletRequest.getRequestDispatcher("/nologin").forward(request,response);
-        }
-        if(redisTemplate.hasKey(token)==null){
-            throw new TotalException(StateEnum.USER_ERROR_WRONGJWT.getCode(),
-                    StateEnum.USER_ERROR_WRONGJWT.getMessage(),
-                    StateEnum.USER_ERROR_WRONGJWT.getMessage());
-        }
+            httpServletRequest.setAttribute("filter.error", totalException);
+            httpServletRequest.getRequestDispatcher("/api/user/nologin").forward(request, response);
+            return;
+            }else if (!redisTemplate.hasKey(token)) {
+                TotalException totalException = new TotalException(StateEnum.USER_ERROR_WRONGJWT.getCode(),
+                        StateEnum.USER_ERROR_WRONGJWT.getMessage(),
+                        StateEnum.USER_ERROR_WRONGJWT.getMessage());
+                httpServletRequest.setAttribute("filter.error", totalException);
+                httpServletRequest.getRequestDispatcher("/api/user/nologin").forward(request, response);
+                return;
+            }
         filterChain.doFilter(request,response);
-
     }
 }

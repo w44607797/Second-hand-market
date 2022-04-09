@@ -116,4 +116,9 @@ public class ShopServiceImpl implements ShopService {
         }
         redisUtils.hPut(key,skuId,skuNum);
     }
+
+    @Override
+    public void deleteCart(String skuId) {
+//        redisUtils.hDelete()
+    }
 }
