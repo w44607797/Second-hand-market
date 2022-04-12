@@ -19,7 +19,7 @@ public enum StateEnum {
     USER_ERROR_WRONGJWT("008","用户身份过期"),
 
     SHOP_ERROR_FAILTOADDCART("400","加购数量不能再减啦"),
-
+    SHOP_ERROR_NOSUCHCART("401","没有对应的购物车可删除"),
 
     SERVICE_ERROR_FAILEDTOGETCODE("300","返回验证码失败"),
 

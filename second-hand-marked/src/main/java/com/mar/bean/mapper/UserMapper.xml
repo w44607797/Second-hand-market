@@ -15,6 +15,9 @@
             </if>
         </trim>
     </select>
+    <select id="checkIsRegister" resultType="java.lang.Integer">
+        select count(phone) from app_user where phone = #{phone}
+    </select>
     <insert id="registerUser">
         insert into app_user (phone, password,salt)
         values (#{phone},#{password},#{salt})

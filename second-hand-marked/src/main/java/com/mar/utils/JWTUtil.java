@@ -25,20 +25,4 @@ public class JWTUtil {
         return Jwts.builder().setSubject(phone).signWith(key).compact();
     }
 
-    private static String getTokenValue(String token,int index){
-        RedisUtils redisUtils = new RedisUtils(new StringRedisTemplate());
-        String s = redisUtils.get(token);
-        if(s==null){
-            return null;
-        }
-        String[] strings = s.split(":");
-        return strings[index];
-    }
-
-    public static String getPhone(String token){
-        return getTokenValue(token,0);
-    }
-    public static String getPermission(String token){
-        return getTokenValue(token,1);
-    }
 }

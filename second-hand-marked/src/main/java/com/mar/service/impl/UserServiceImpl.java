@@ -76,6 +76,7 @@ public class UserServiceImpl implements UserService {
         String regCode = userRegisterVO.getCode();
         String phone = userRegisterVO.getPhone();
         String salt = SaltUtil.getSalt(4);
+        String name = userRegisterVO.getName();
         String total = userRegisterVO.getPassword()+ salt;
         String resultPassword = MD5Util.getMD5(total);
         String correctCode = redisService.getCode(phone);
@@ -83,11 +84,14 @@ public class UserServiceImpl implements UserService {
             return ResponseResult.failed(StateEnum.USER_ERROR_WRONGCODE.getCode(),
                     StateEnum.USER_ERROR_WRONGCODE.getMessage());
         }
-        int i = userMapper.registerUser(phone,resultPassword,salt);
-        if(i==0){
+        /**
+         * 判断是否注册
+         */
+        if(userMapper.checkIsRegister(phone)>0){
             return ResponseResult.failed(StateEnum.USER_ERROR_HASBEENREGISTER.getCode(),
                     StateEnum.USER_ERROR_HASBEENREGISTER.getMessage());
         }
+        userMapper.registerUser(phone,resultPassword,salt,name);
         return ResponseResult.success();
     }
 

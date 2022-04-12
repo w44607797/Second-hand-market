@@ -11,8 +11,7 @@ import com.mar.bean.vo.UserLoginVO;
 public interface RedisService {
     void storeCode(String phone,String code);
     String getCode(String phone);
-    void deleteKey(String key);
-    boolean checkExist(String key);
     void setToken(String phone,String token);
-
+    String getUserPhoneByToken(String token);
+    String getUserPermissionByToken(String token);
 }

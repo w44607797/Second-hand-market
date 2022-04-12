@@ -22,4 +22,5 @@ public class UserDao implements Serializable {
     private String headshot;
     private String salt;
     private String permission;
+    private String name;
 }

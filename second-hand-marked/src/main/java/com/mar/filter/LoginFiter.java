@@ -44,7 +44,7 @@ public class LoginFiter implements Filter{
         String token = httpServletRequest.getHeader("token");
         String userTempId = httpServletRequest.getHeader("token");
         System.out.println(url);
-        if(token==null || userTempId==null) {
+        if(token==null && userTempId==null) {
             TotalException totalException = new TotalException(StateEnum.USER_ERROR_NOLOGIN.getCode(),
                     StateEnum.USER_ERROR_NOLOGIN.getMessage(),
                     StateEnum.USER_ERROR_NOLOGIN.getMessage());

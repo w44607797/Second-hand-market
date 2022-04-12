@@ -24,28 +24,30 @@ public class RedisServiceImpl implements RedisService {
     @Autowired
     RedisUtils redisUtils;
 
+    /**
+     * 存储对应手机号的验证码
+     * @param phone
+     * @param code
+     */
 
     @Override
     public void storeCode(String phone,String code) {
-        redisTemplate.opsForValue().set(phone+":code",code,1800,TimeUnit.SECONDS);
-    }
-
-    @Override
-    public String getCode(String phone) {
-       return redisTemplate.opsForValue().get(phone+":code");
-    }
-
-    @Override
-    public void deleteKey(String key) {
-        redisTemplate.delete(key);
-    }
-
-    @Override
-    public boolean checkExist(String key) {
-        return redisUtils.hasKey(key);
+        redisTemplate.opsForValue().set(phone+":code",code,1800, TimeUnit.SECONDS);
     }
 
     /**
+     * 获取对应手机号的验证码
+     * @param phone
+     * @return
+     */
+    @Override
+    public String getCode(String phone) {
+        return redisTemplate.opsForValue().get(phone+":code");
+    }
+
+
+    /**
+     * 设置token对应的参数
      * phone:permission
      * @param phone
      * @param token
@@ -55,4 +57,24 @@ public class RedisServiceImpl implements RedisService {
     public void setToken(String phone,String token) {
         redisTemplate.opsForValue().set(token,phone,1800,TimeUnit.SECONDS);
     }
+
+    private String getUserParamByToken(String token,int index) {
+        /**
+         * phone:permission
+         */
+        String[] split = token.split(":");
+        return split[index];
+    }
+
+    @Override
+    public String getUserPhoneByToken(String token) {
+        return getUserParamByToken(token,0);
+    }
+
+    @Override
+    public String getUserPermissionByToken(String token) {
+
+        return getUserParamByToken(token,1);
+    }
+
 }

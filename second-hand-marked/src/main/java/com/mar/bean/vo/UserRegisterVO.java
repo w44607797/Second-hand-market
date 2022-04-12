@@ -32,4 +32,7 @@ public class UserRegisterVO implements Serializable {
     @NotNull(message = "验证码不能为空")
     private String code;
 
+    @NotEmpty(message = "验证码不能为空")
+    @NotNull(message = "验证码不能为空")
+    private String name;
 }

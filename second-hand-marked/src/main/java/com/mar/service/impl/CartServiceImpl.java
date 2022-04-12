@@ -1,8 +1,5 @@
 package com.mar.service.impl;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
-import cn.hutool.Hutool;
-import cn.hutool.core.util.RandomUtil;
 import com.mar.bean.dao.Commodity;
 import com.mar.bean.dao.ShopCartDAO;
 import com.mar.bean.doo.CommodityShopDO;
@@ -10,8 +7,8 @@ import com.mar.bean.mapper.CommodityMapper;
 import com.mar.bean.mapper.ShopMapper;
 import com.mar.bean.vo.ShoppingCartVO;
 import com.mar.exception.TotalException;
-import com.mar.service.ShopService;
-import com.mar.utils.DozerUtils;
+import com.mar.service.CartService;
+import com.mar.service.RedisService;
 import com.mar.utils.JWTUtil;
 import com.mar.utils.RedisUtils;
 import com.mar.utils.StateEnum;
@@ -26,7 +23,7 @@ import java.util.*;
  * @createDate: 2022/4/6
  **/
 @Service
-public class ShopServiceImpl implements ShopService {
+public class CartServiceImpl implements CartService {
 
     @Autowired
     ShopMapper shopMapper;
@@ -36,6 +33,9 @@ public class ShopServiceImpl implements ShopService {
 
     @Autowired
     RedisUtils redisUtils;
+
+    @Autowired
+    RedisService redisService;
 
     @Autowired
     CommodityMapper commodityMapper;
@@ -63,6 +63,9 @@ public class ShopServiceImpl implements ShopService {
             if(commodity==null){
                 continue;
             }
+            /**
+             * 实体类之间的转换
+             */
             int skuPrice = Integer.parseInt(commodity.getSkuPrice());
             cartPrice += skuPrice*num;
             totalPrice += cartPrice;
@@ -97,7 +100,10 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public void addToShoppingCart(String token,String skuId,String skuNum) throws TotalException {
-        String phone = JWTUtil.getPhone(token);
+        String phone = redisService.getUserPhoneByToken(token);
+        /**
+         * key格式 phone:cart
+         */
         String key = phone+":cart";
         if(!redisUtils.hasKey(key)){
             redisUtils.hPut(key,skuId,skuNum);
@@ -117,8 +123,28 @@ public class ShopServiceImpl implements ShopService {
         redisUtils.hPut(key,skuId,skuNum);
     }
 
+    /**
+     * 删除对应购物车
+     * @param token
+     * @param skuId
+     * @throws TotalException
+     */
+
     @Override
-    public void deleteCart(String skuId) {
-//        redisUtils.hDelete()
+    public void deleteCart(String token,String skuId) throws TotalException {
+        String phone = redisService.getUserPhoneByToken(token);
+        String hkey = phone+":cart";
+        if(redisUtils.hasKey(hkey)){
+            redisUtils.hDelete(hkey,skuId);
+        }else {
+            throw new TotalException(StateEnum.SHOP_ERROR_NOSUCHCART.getCode(),
+                    StateEnum.SHOP_ERROR_NOSUCHCART.getMessage(),
+                    StateEnum.SHOP_ERROR_NOSUCHCART.getMessage());
+        }
+    }
+
+    @Override
+    public void changeCartStatus(String skuId, String isChecked) {
+
     }
 }
