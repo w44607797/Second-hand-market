@@ -1,10 +1,8 @@
 package com.mar.service.impl;
 
 import com.mar.bean.dao.Commodity;
-import com.mar.bean.dao.ShopCartDAO;
 import com.mar.bean.doo.CommodityShopDO;
 import com.mar.bean.mapper.CommodityMapper;
-import com.mar.bean.mapper.ShopMapper;
 import com.mar.bean.vo.ShoppingCartVO;
 import com.mar.exception.TotalException;
 import com.mar.service.CartService;
@@ -25,8 +23,6 @@ import java.util.*;
 @Service
 public class CartServiceImpl implements CartService {
 
-    @Autowired
-    ShopMapper shopMapper;
 
     @Autowired
     Mapper dozerMapper;
@@ -84,17 +80,6 @@ public class CartServiceImpl implements CartService {
 //            shoppingCartVOS[temp++] = dozerMapper.map(shopCartDAO,ShoppingCartVO.class);
 //        }
 //        return shoppingCartVOS;
-        return shoppingCartVOS;
-    }
-
-    @Override
-    public synchronized ShoppingCartVO[] getShoppingCartByChecked(String isChecked) {
-        List<ShopCartDAO> shopCartListByChecked = shopMapper.getShopCartListByChecked(isChecked);
-        ShoppingCartVO[] shoppingCartVOS = new ShoppingCartVO[shopCartListByChecked.size()];
-        int temp = 0;
-        for(ShopCartDAO shopCartDAO : shopCartListByChecked){
-            shoppingCartVOS[temp++] = dozerMapper.map(shopCartDAO,ShoppingCartVO.class);
-        }
         return shoppingCartVOS;
     }
 

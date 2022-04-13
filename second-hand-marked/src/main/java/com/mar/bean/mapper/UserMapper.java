@@ -1,5 +1,7 @@
 package com.mar.bean.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.mar.bean.dao.UserDao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -12,7 +14,7 @@ import java.util.Map;
  **/
 @Mapper
 @Repository
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<UserDao> {
     String getParamByPhone(Map map);
     int registerUser(@Param("phone")String phone,
                      @Param("password")String password,

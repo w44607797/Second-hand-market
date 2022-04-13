@@ -7,6 +7,7 @@ package com.mar.filter;
 
 import com.mar.bean.vo.ResponseResult;
 import com.mar.exception.TotalException;
+import com.mar.service.RedisService;
 import com.mar.utils.StateEnum;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,9 @@ public class LoginFiter implements Filter{
 
     @Autowired
     RedisTemplate redisTemplate;
+
+    @Autowired
+    RedisService redisService;
 
 
     public void init(FilterConfig config) throws ServletException {
@@ -59,6 +63,12 @@ public class LoginFiter implements Filter{
                 httpServletRequest.getRequestDispatcher("/api/user/nologin").forward(request, response);
                 return;
             }
+        /**
+         * 将phone和permission设置在Attribute
+         */
+//        String phone = redisService.getUserPhoneByToken(token);
+//        String permission = redisService.getUserPermissionByToken(token);
+//        httpServletRequest.setAttribute("phone",phone);
         filterChain.doFilter(request,response);
     }
 }

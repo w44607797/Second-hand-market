@@ -47,7 +47,11 @@ public class UserController {
         if(!responseResult.isOk()){
             return responseResult;
         }
-        String s = userService.UserBingdingJWT(userLoginVO);
+        /**
+         * 返回JWT
+         */
+        String phone = userLoginVO.getPhone();
+        String s = userService.getJWTByPhone(phone);
         responseResult.setData(s);
         return responseResult;
     }
@@ -78,7 +82,7 @@ public class UserController {
      */
 
     @GetMapping("/passport/sendCode/{phone}")
-    public ResponseResult getVertifyCode(HttpServletResponse response, @PathVariable String phone) throws IOException {
+    public ResponseResult getVertifyCode(HttpServletResponse response, @RequestAttribute String phone) throws IOException {
         LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
         OutputStream out = response.getOutputStream();
         try {
@@ -94,9 +98,9 @@ public class UserController {
         return ResponseResult.success();
     }
     @GetMapping("/passport/logout/{phone}")
-    public ResponseResult userLogout(@PathVariable String phone){
+    public ResponseResult userLogout(@RequestHeader String token){
 //        redisService.deleteKey(phone);
-        redisUtils.delete(phone);
+        redisUtils.delete(token);
         return ResponseResult.success();
     }
 

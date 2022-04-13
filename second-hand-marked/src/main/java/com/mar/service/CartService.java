@@ -12,7 +12,6 @@ import java.util.List;
 
 public interface CartService {
     ShoppingCartVO[] getShoppingCartByPhone(String phone);
-    ShoppingCartVO[] getShoppingCartByChecked(String isChecked);
     void addToShoppingCart(String token,String skuId,String skuNum) throws TotalException;
     void deleteCart(String token,String skuId) throws TotalException;
     void changeCartStatus(String skuId,String isChecked);

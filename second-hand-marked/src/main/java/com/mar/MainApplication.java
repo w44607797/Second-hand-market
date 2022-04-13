@@ -15,7 +15,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 @SpringBootApplication
 @ServletComponentScan("com.mar.filter")
-//@MapperScan("com/mar/bean/mapper")
+@MapperScan("com/mar/bean/mapper")
 public class MainApplication {
     public static void main(String[] args) {
         SpringApplication.run(MainApplication.class,args);

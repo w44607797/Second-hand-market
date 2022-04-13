@@ -1,6 +1,9 @@
 package com.guo;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mar.MainApplication;
+import com.mar.bean.dao.UserDao;
+import com.mar.bean.mapper.UserMapper;
 import com.mar.bean.vo.UserLoginVO;
 import com.mar.exception.TotalException;
 import com.mar.service.RedisService;
@@ -14,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.sql.Wrapper;
 import java.util.Map;
 
 /**
@@ -25,6 +29,9 @@ import java.util.Map;
 public class TotalTest {
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserMapper userMapper;
 
     @Autowired
     RedisService redisService;
@@ -68,5 +75,37 @@ public class TotalTest {
         }
 
     }
+    @Test
+    public void TextMybatisPlus(){
+        UserDao userDao = userMapper.selectById("17759048528");
+        System.out.println(userDao);
+        UserDao dao = new UserDao();
+        dao.setPhone("17759048528");
+        boolean exists = userMapper.exists(null);
+        System.out.println(exists);
 
+    }
+
+    @Test
+    public void demoUserService(){
+        System.out.println(userService.count());
+
+
+    }
+    @Test
+    public void demoUserLogin(){
+        UserDao userDao = new UserDao();
+        userDao.setName("nog");
+        userDao.setSalt("aaa");
+        userDao.setPassword("ddd");
+        userDao.setPermission("admin");
+        userService.save(userDao);
+    }
+    @Test
+    public void demoplus(){
+        QueryWrapper<UserDao> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("phone","17759048528");
+        queryWrapper.select("permission");
+        System.out.println(userMapper.selectOne(queryWrapper));
+    }
 }

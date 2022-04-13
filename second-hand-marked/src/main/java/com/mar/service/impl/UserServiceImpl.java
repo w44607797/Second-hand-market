@@ -4,6 +4,9 @@ import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.digest.Digester;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mar.bean.dao.UserDao;
 import com.mar.bean.mapper.UserMapper;
 import com.mar.bean.vo.ResponseResult;
 import com.mar.bean.vo.UserLoginVO;
@@ -32,7 +35,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper,UserDao> implements UserService {
 
     @Autowired
     UserMapper userMapper;
@@ -64,11 +67,11 @@ public class UserServiceImpl implements UserService {
         }
         String total = userLoginVO.getPassword()+salt;
         String pass = MD5Util.getMD5(total);
-        if(pass.equals(password)){
-            return ResponseResult.success();
+        if(!pass.equals(password)){
+            return ResponseResult.failed(StateEnum.USER_ERROR_WRONGPASSWORD.getCode(),
+                    StateEnum.USER_ERROR_WRONGPASSWORD.getMessage());
         }
-        return ResponseResult.failed(StateEnum.USER_ERROR_WRONGPASSWORD.getCode(),
-                StateEnum.USER_ERROR_WRONGPASSWORD.getMessage());
+        return ResponseResult.success();
     }
 
     @Override
@@ -87,6 +90,9 @@ public class UserServiceImpl implements UserService {
         /**
          * 判断是否注册
          */
+
+
+
         if(userMapper.checkIsRegister(phone)>0){
             return ResponseResult.failed(StateEnum.USER_ERROR_HASBEENREGISTER.getCode(),
                     StateEnum.USER_ERROR_HASBEENREGISTER.getMessage());
@@ -96,8 +102,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String UserBingdingJWT(UserLoginVO userLoginVO) throws TotalException {
-        String phone = userLoginVO.getPhone();
+    public String getJWTByPhone(String phone) throws TotalException {
         String jwt = JWTUtil.getJWT(phone);
         try {
             redisService.setToken(phone,jwt);

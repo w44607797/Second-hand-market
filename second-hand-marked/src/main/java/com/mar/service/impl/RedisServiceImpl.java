@@ -1,5 +1,8 @@
 package com.mar.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.mar.bean.dao.UserDao;
+import com.mar.bean.mapper.UserMapper;
 import com.mar.bean.vo.UserLoginVO;
 import com.mar.service.RedisService;
 import com.mar.utils.JWTUtil;
@@ -23,6 +26,9 @@ public class RedisServiceImpl implements RedisService {
 
     @Autowired
     RedisUtils redisUtils;
+
+    @Autowired
+    UserMapper userMapper;
 
     /**
      * 存储对应手机号的验证码
@@ -55,26 +61,24 @@ public class RedisServiceImpl implements RedisService {
 
     @Override
     public void setToken(String phone,String token) {
-        redisTemplate.opsForValue().set(token,phone,1800,TimeUnit.SECONDS);
-    }
-
-    private String getUserParamByToken(String token,int index) {
-        /**
-         * phone:permission
-         */
-        String[] split = token.split(":");
-        return split[index];
+        QueryWrapper<UserDao> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("phone",phone);
+        queryWrapper.select("permission");
+        UserDao userDao = userMapper.selectOne(queryWrapper);
+        String permission = userDao.getPermission();
+        redisUtils.hPut(token,"phone",phone);
+        redisUtils.hPut(token,"permission",permission);
+        redisUtils.expire(token,1800,TimeUnit.SECONDS);
     }
 
     @Override
     public String getUserPhoneByToken(String token) {
-        return getUserParamByToken(token,0);
+        return (String) redisUtils.hGet(token,"phone");
     }
 
     @Override
     public String getUserPermissionByToken(String token) {
-
-        return getUserParamByToken(token,1);
+        return (String) redisUtils.hGet(token,"permission");
     }
 
 }
