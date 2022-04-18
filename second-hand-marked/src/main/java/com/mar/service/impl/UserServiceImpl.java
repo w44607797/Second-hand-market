@@ -46,28 +46,30 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserDao> implements 
 
     @Override
     public ResponseResult userLogin(UserLoginVO userLoginVO) throws TotalException {
-        Map<String, Object> map = new HashMap();
-        map.put("condition","password");
-        map.put("phone",userLoginVO.getPhone());
-        String salt;
-        String password;
-        try {
-            password = userMapper.getParamByPhone(map);
-            map.put("condition","salt");
-            salt = userMapper.getParamByPhone(map);
-        } catch (Exception e) {
-            e.printStackTrace();
+        QueryWrapper<UserDao> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("password", "salt");
+        queryWrapper.eq("phone", userLoginVO.getPhone());
+        UserDao userDao = userMapper.selectOne(queryWrapper);
+        if (userDao == null) {
             throw new TotalException(StateEnum.DATABASE_ERROR_MESSAGE.getCode(),
                     StateEnum.DATABASE_ERROR_MESSAGE.getMessage(),
                     StateEnum.DATABASE_ERROR_FAILEDTOGETUSER.getMessage());
         }
-        if(password==null||salt==null){
+
+        /**
+         * 获取乱码和盐
+         */
+
+        String salt = userDao.getSalt();
+        String password = userDao.getPassword();
+
+        if (password == null || salt == null) {
             return ResponseResult.failed(StateEnum.USER_ERROR_NOREGISTER.getCode(),
                     StateEnum.USER_ERROR_NOREGISTER.getMessage());
         }
-        String total = userLoginVO.getPassword()+salt;
+        String total = userLoginVO.getPassword() + salt;
         String pass = MD5Util.getMD5(total);
-        if(!pass.equals(password)){
+        if (!pass.equals(password)) {
             return ResponseResult.failed(StateEnum.USER_ERROR_WRONGPASSWORD.getCode(),
                     StateEnum.USER_ERROR_WRONGPASSWORD.getMessage());
         }
@@ -80,10 +82,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserDao> implements 
         String phone = userRegisterVO.getPhone();
         String salt = SaltUtil.getSalt(4);
         String name = userRegisterVO.getName();
-        String total = userRegisterVO.getPassword()+ salt;
+        String total = userRegisterVO.getPassword() + salt;
         String resultPassword = MD5Util.getMD5(total);
         String correctCode = redisService.getCode(phone);
-        if(!regCode.equals(correctCode)){
+        if (!regCode.equals(correctCode)) {
             return ResponseResult.failed(StateEnum.USER_ERROR_WRONGCODE.getCode(),
                     StateEnum.USER_ERROR_WRONGCODE.getMessage());
         }
@@ -91,13 +93,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserDao> implements 
          * 判断是否注册
          */
 
-
-
-        if(userMapper.checkIsRegister(phone)>0){
+        if (userMapper.checkIsRegister(phone) > 0) {
             return ResponseResult.failed(StateEnum.USER_ERROR_HASBEENREGISTER.getCode(),
                     StateEnum.USER_ERROR_HASBEENREGISTER.getMessage());
         }
-        userMapper.registerUser(phone,resultPassword,salt,name);
+
+        UserDao userDao = new UserDao();
+        userDao.setSalt(salt);
+        userDao.setPassword(resultPassword);
+        userDao.setPhone(phone);
+        userDao.setName(name);
+        userMapper.insert(userDao);
         return ResponseResult.success();
     }
 
@@ -105,7 +111,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserDao> implements 
     public String getJWTByPhone(String phone) throws TotalException {
         String jwt = JWTUtil.getJWT(phone);
         try {
-            redisService.setToken(phone,jwt);
+            redisService.setToken(phone, jwt);
         } catch (Exception e) {
             throw new TotalException(StateEnum.USER_ERROR_FAILEDTOBINGDINGJWT.getCode(),
                     StateEnum.USER_ERROR_FAILEDTOBINGDINGJWT.getMessage(),
@@ -118,7 +124,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserDao> implements 
     public String getLoginCode() {
         return null;
     }
-
 
 
 }

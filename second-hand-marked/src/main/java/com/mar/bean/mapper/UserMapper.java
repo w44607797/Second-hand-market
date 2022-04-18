@@ -15,10 +15,5 @@ import java.util.Map;
 @Mapper
 @Repository
 public interface UserMapper extends BaseMapper<UserDao> {
-    String getParamByPhone(Map map);
-    int registerUser(@Param("phone")String phone,
-                     @Param("password")String password,
-                     @Param("salt")String salt,
-                     @Param("name")String name);
     int checkIsRegister(String phone);
 }

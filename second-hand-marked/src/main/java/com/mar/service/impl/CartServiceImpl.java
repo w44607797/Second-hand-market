@@ -1,5 +1,6 @@
 package com.mar.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mar.bean.dao.Commodity;
 import com.mar.bean.doo.CommodityShopDO;
 import com.mar.bean.mapper.CommodityMapper;
@@ -44,6 +45,11 @@ public class CartServiceImpl implements CartService {
         if(!aBoolean){
             return null;
         }
+        /**
+         * 在redis获取商品id
+         * 在数据库查询商品信息
+         */
+
         Map<Object, Object> skuIdMap = redisUtils.hGetAll(key);
         Map<String,Object> map = new HashMap<>();
         map.put("condition","sku_id,sku_num,sku_price,sku_name,img_url");
@@ -88,6 +94,11 @@ public class CartServiceImpl implements CartService {
         String phone = redisService.getUserPhoneByToken(token);
         /**
          * key格式 phone:cart
+         */
+
+        /**
+         * 若用户没有购物车，生成一个
+         *
          */
         String key = phone+":cart";
         if(!redisUtils.hasKey(key)){

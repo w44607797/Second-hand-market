@@ -108,4 +108,20 @@ public class TotalTest {
         queryWrapper.select("permission");
         System.out.println(userMapper.selectOne(queryWrapper));
     }
+    @Test
+    public void demoplus2(){
+        QueryWrapper<UserDao> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("password", "salt");
+        queryWrapper.eq("phone","17759048528");
+        UserDao userDao = userMapper.selectOne(queryWrapper);
+        String password = userDao.getPassword();
+        String salt = userDao.getSalt();
+        System.out.println(password);
+        System.out.println(salt);
+        queryWrapper.clear();
+        queryWrapper.select("password", "salt");
+        queryWrapper.eq("phone","15880411165");
+        UserDao userDao1 = userMapper.selectOne(queryWrapper);
+        System.out.println(userDao1);
+    }
 }
