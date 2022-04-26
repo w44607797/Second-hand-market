@@ -17,21 +17,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebAppConfig implements WebMvcConfigurer {
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        CustomInterceptor customInterceptor= new CustomInterceptor();
-        registry.addInterceptor(customInterceptor);
-    }
-
-    @Bean
-    public FilterRegistrationBean servletRegistrationBean() {
-        UserInfoFilter userInfoFilter = new UserInfoFilter();
-        FilterRegistrationBean<UserInfoFilter> bean = new FilterRegistrationBean<>();
-        bean.setFilter(userInfoFilter);
-        bean.setName("userParamFilter");
-        bean.addUrlPatterns("/*");
-        bean.setOrder(Ordered.LOWEST_PRECEDENCE);
-
-        return bean;
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        CustomInterceptor customInterceptor= new CustomInterceptor();
+//        registry.addInterceptor(customInterceptor);
+//    }
+//
+//    @Bean
+//    public FilterRegistrationBean servletRegistrationBean() {
+//        UserInfoFilter userInfoFilter = new UserInfoFilter();
+//        FilterRegistrationBean<UserInfoFilter> bean = new FilterRegistrationBean<>();
+//        bean.setFilter(userInfoFilter);
+//        bean.setName("userParamFilter");
+//        bean.addUrlPatterns("/*");
+//        bean.setOrder(Ordered.LOWEST_PRECEDENCE);
+//
+//        return bean;
+//    }
 }

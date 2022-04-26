@@ -17,5 +17,11 @@ public class basicTest {
         String md5 = MD5Util.getMD5("123456salt");
         System.out.println(md5);
     }
+    @Test
+    public void demoSplit(){
+        String a = "ffawdaw.png";
+        String[] b = a.split("\\.");
+        System.out.println(b[1]);
+    }
 
 }

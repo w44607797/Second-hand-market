@@ -1,10 +1,13 @@
 package com.mar.service.impl;
 
+import cn.hutool.Hutool;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.digest.Digester;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mar.bean.dao.UserDao;
 import com.mar.bean.mapper.UserMapper;
@@ -16,13 +19,16 @@ import com.mar.service.RedisService;
 import com.mar.service.UserService;
 import com.mar.utils.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.management.ObjectName;
+import javax.servlet.ServletOutputStream;
 import javax.validation.Valid;
 import java.io.*;
 import java.util.HashMap;
@@ -131,17 +137,62 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDao> implements
     }
 
     @Override
-    public String uploadHeadShot() {
+    public String uploadHeadShot(String url,String phone, MultipartFile file,String extendsion) throws IOException {
+        String uuid = IdUtil.randomUUID();
+        String profilefileName = url+"/"+phone;
+        File profile = new File(profilefileName);
+        if (!profile.exists()) {
+            log.info("没有存储文件夹，尝试新建");
+            if (profile.mkdirs()) {
+                log.info("存储文件夹新建成功");
+            } else {
+                log.error("存储文件夹新建失败");
+                return "服务器存储失败";
+            }
+        }
+
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(uuid);
+        sb.append(".");
+        sb.append(extendsion);
+        String fileName = sb.toString();
+        byte[] bytes = file.getBytes();
+        OutputStream outputStream = new FileOutputStream(fileName);
+        outputStream.write(bytes);
+
+        UpdateWrapper<UserDao> updateWrapper = new UpdateWrapper<UserDao>();
+        updateWrapper.eq("phone","17759048528");
+        UserDao userDao = new UserDao();
+        userDao.setHeadshot(fileName);
+        userMapper.update(userDao, updateWrapper);
+        return fileName;
+
 
 
     }
 
     @Override
-    public OutputStream getUserHeadShotStream(String url) throws IOException {
-        OutputStream outputStream = null;
+    public ServletOutputStream getUserHeadShotStream(String phone, ServletOutputStream outputStream) throws IOException {
+
+        String userHeadShotUrl = getUserHeadShotUrl(phone);
+
+
+        /**
+         * 获取headshoturl
+         */
+        QueryWrapper<UserDao> queryWrapper = new QueryWrapper();
+        queryWrapper.eq("phone",phone);
+        queryWrapper.select("headshot");
+        UserDao userDao = userMapper.selectOne(queryWrapper);
+        String headshot = userDao.getHeadshot();
+        if(headshot==null){
+            return outputStream;
+        }
+
+        String URL = userHeadShotUrl+headshot;
         try {
-            InputStream fileInputStream = new FileInputStream(url);
-            outputStream = new ByteArrayOutputStream();
+            InputStream fileInputStream = new FileInputStream(URL);
             int ch;
             while ((ch = fileInputStream.read()) != -1) {
                 outputStream.write(ch);
@@ -154,10 +205,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDao> implements
                 outputStream.close();
             }
         }
+
         return outputStream;
     }
 
-    @Override
     public String getUserHeadShotUrl(String phone) {
         QueryWrapper<UserDao> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("headshot");
@@ -168,7 +219,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDao> implements
             //返回无头像的存储地址
             return userHeadShotUrl+"/Null";
         }
-        return url;
+        return userHeadShotUrl+"/"+phone;
     }
 
 

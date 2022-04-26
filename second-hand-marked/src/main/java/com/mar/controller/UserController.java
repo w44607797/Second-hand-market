@@ -10,7 +10,6 @@ import com.mar.bean.vo.ResponseResult;
 import com.mar.bean.vo.UserLoginVO;
 import com.mar.bean.vo.UserRegisterVO;
 import com.mar.exception.TotalException;
-import com.mar.service.FileService;
 import com.mar.service.RedisService;
 import com.mar.service.UserService;
 import com.mar.utils.FileUtil;
@@ -21,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -42,8 +42,8 @@ public class UserController {
     RedisService redisService;
     @Autowired
     RedisUtils redisUtils;
-    @Autowired
-    FileService fileService;
+
+
 
     @PostMapping("/passport/login")
     public ResponseResult<String> userLogin(@Valid UserLoginVO userLoginVO, BindingResult bindingResult) throws TotalException {
@@ -130,16 +130,16 @@ public class UserController {
      * @return
      */
     @PostMapping("/")
-    public ResponseResult userUploadFile(MultipartFile file, String phone) throws TotalException {
+    public ResponseResult userUploadFile(MultipartFile file, String phone) throws TotalException, IOException {
         if(file==null){
             throw new TotalException(StateEnum.USER_ERROR_HEADSHOTISNULL.getCode(),
                     StateEnum.USER_ERROR_HEADSHOTISNULL.getMessage());
         }
         String fileExtension = FileUtil.getFileExtension(file);
 
-        String url = fileService.storgePhoto(file, UrlEnum.USER_HEADSHOT.getUrl(), fileExtension);
+        String url = userService.uploadHeadShot(UrlEnum.USER_HEADSHOT.getUrl(),phone,file,fileExtension);
 
-
+        return ResponseResult.success();
     }
 
     /**
@@ -149,11 +149,13 @@ public class UserController {
      */
 
     @GetMapping("/")
-    public ResponseResult getUserHeadShot(String phone){
+    public ResponseResult getUserHeadShot(HttpServletResponse response,String phone) throws IOException {
         /**
          * 数据库查询用户头像存储地址
          */
         String userHeadShotUrl = userService.getUserHeadShotUrl(phone);
+        ServletOutputStream outputStream = response.getOutputStream();
+        userService.getUserHeadShotStream(userHeadShotUrl,outputStream);
         return ResponseResult.success();
     }
 

@@ -1,6 +1,7 @@
 package com.guo;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.mar.MainApplication;
 import com.mar.bean.dao.UserDao;
 import com.mar.bean.mapper.UserMapper;
@@ -111,7 +112,7 @@ public class TotalTest {
     @Test
     public void demoplus2(){
         QueryWrapper<UserDao> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("password", "salt");
+        queryWrapper.select("password", "salt","headshot");
         queryWrapper.eq("phone","17759048528");
         UserDao userDao = userMapper.selectOne(queryWrapper);
         String password = userDao.getPassword();
@@ -123,5 +124,15 @@ public class TotalTest {
         queryWrapper.eq("phone","15880411165");
         UserDao userDao1 = userMapper.selectOne(queryWrapper);
         System.out.println(userDao1);
+    }
+
+    @Test
+    public void demoUpdateData(){
+        UpdateWrapper<UserDao> updateWrapper = new UpdateWrapper<UserDao>();
+        updateWrapper.eq("phone","17759048528");
+        UserDao userDao = new UserDao();
+        userDao.setHeadshot("demodemo");
+        userMapper.update(userDao,updateWrapper);
+
     }
 }

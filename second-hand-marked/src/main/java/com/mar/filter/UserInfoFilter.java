@@ -13,7 +13,7 @@ import java.util.Objects;
  * @author guokaifeng
  * @createDate: 2022/4/23
  **/
-@WebFilter(urlPatterns = {"/*"},filterName = "UserInfoFilter")
+//@WebFilter(urlPatterns = {"/*"},filterName = "UserInfoFilter")
 @Slf4j
 public class UserInfoFilter implements Filter {
 

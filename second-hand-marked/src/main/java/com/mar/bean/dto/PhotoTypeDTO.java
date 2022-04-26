@@ -7,14 +7,19 @@ import lombok.Getter;
  * @createDate: 2022/4/25
  **/
 @Getter
-public class PhotoTypeDTO {
+public enum PhotoTypeDTO {
+    HEADSHOT_PNG("png");
 
-    private String url;
+
+
     private String extendsion;
 
-    PhotoTypeDTO(String url,String extendsion){
-        this.url = url;
+    PhotoTypeDTO(String extendsion){
         this.extendsion = extendsion;
+    }
+
+    public void checkValid(String extendsion){
+
     }
 
 
