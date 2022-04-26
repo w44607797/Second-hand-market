@@ -17,13 +17,14 @@ import com.mar.service.UserService;
 import com.mar.utils.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.management.ObjectName;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import javax.validation.Valid;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -35,7 +36,8 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
-public class UserServiceImpl extends ServiceImpl<UserMapper,UserDao> implements UserService {
+@PropertySource("classpath:service.properties")
+public class UserServiceImpl extends ServiceImpl<UserMapper, UserDao> implements UserService {
 
     @Autowired
     UserMapper userMapper;
@@ -43,6 +45,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserDao> implements 
     RedisTemplate redisTemplate;
     @Autowired
     RedisService redisService;
+
+    @Value("${user.headshot.url}")
+    private String userHeadShotUrl;
 
     @Override
     public ResponseResult userLogin(UserLoginVO userLoginVO) throws TotalException {
@@ -123,6 +128,47 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserDao> implements 
     @Override
     public String getLoginCode() {
         return null;
+    }
+
+    @Override
+    public String uploadHeadShot() {
+
+
+    }
+
+    @Override
+    public OutputStream getUserHeadShotStream(String url) throws IOException {
+        OutputStream outputStream = null;
+        try {
+            InputStream fileInputStream = new FileInputStream(url);
+            outputStream = new ByteArrayOutputStream();
+            int ch;
+            while ((ch = fileInputStream.read()) != -1) {
+                outputStream.write(ch);
+            }
+        } catch (IOException e) {
+            log.error("url路径错误");
+            e.printStackTrace();
+        } finally {
+            if (outputStream != null) {
+                outputStream.close();
+            }
+        }
+        return outputStream;
+    }
+
+    @Override
+    public String getUserHeadShotUrl(String phone) {
+        QueryWrapper<UserDao> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("headshot");
+        queryWrapper.eq("phone",phone);
+        UserDao userDao = userMapper.selectOne(queryWrapper);
+        String url = userDao.getHeadshot();
+        if(url==null){
+            //返回无头像的存储地址
+            return userHeadShotUrl+"/Null";
+        }
+        return url;
     }
 
 

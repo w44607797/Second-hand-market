@@ -1,5 +1,6 @@
 package com.mar.exception;
 
+import com.mar.utils.StateEnum;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -16,6 +17,15 @@ public class TotalException extends Exception{
         this.code = code;
         log.error(logMess);
     }
+    public TotalException(String code,String message){
+        this(message);
+        this.code = code;
+    }
+    public TotalException(StateEnum stateEnum){
+        this(stateEnum.getMessage());
+        this.code = stateEnum.getCode();
+    }
+
     public TotalException(){}
     public TotalException(String message){super(message);}
 //    public void setCode(String code){

@@ -7,5 +7,8 @@ package com.mar.service;
 
 
 public interface OrderService {
-    void addOrder();
+    /**
+     * 提交订单
+     */
+    void addOrder(String phone);
 }

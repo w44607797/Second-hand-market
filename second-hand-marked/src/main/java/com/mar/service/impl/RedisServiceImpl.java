@@ -54,6 +54,7 @@ public class RedisServiceImpl implements RedisService {
 
     /**
      * 设置token对应的参数
+     * filed1:filed2
      * phone:permission
      * @param phone
      * @param token

@@ -8,6 +8,9 @@ import com.mar.bean.vo.UserRegisterVO;
 import com.mar.exception.TotalException;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 /**
  * @author guokaifeng
  * @createDate: 2022/4/4
@@ -19,6 +22,9 @@ public interface UserService extends IService<UserDao> {
     ResponseResult userRegister(UserRegisterVO userRegisterVO);
     String getJWTByPhone(String phone) throws TotalException;
     String getLoginCode();
+    String uploadHeadShot();
+    OutputStream getUserHeadShotStream(String url) throws IOException;
+    String getUserHeadShotUrl(String phone);
 
 
 

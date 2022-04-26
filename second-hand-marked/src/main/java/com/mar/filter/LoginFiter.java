@@ -8,6 +8,7 @@ package com.mar.filter;
 import com.mar.bean.vo.ResponseResult;
 import com.mar.exception.TotalException;
 import com.mar.service.RedisService;
+import com.mar.utils.RedisUtils;
 import com.mar.utils.StateEnum;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +20,15 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @WebFilter(urlPatterns = {"/api/user/passport/logout/*","/api/cart/*"},filterName = "LoginFiter")
 @Slf4j
@@ -63,12 +68,9 @@ public class LoginFiter implements Filter{
                 httpServletRequest.getRequestDispatcher("/api/user/nologin").forward(request, response);
                 return;
             }
-        /**
-         * 将phone和permission设置在Attribute
-         */
-//        String phone = redisService.getUserPhoneByToken(token);
-//        String permission = redisService.getUserPermissionByToken(token);
-//        httpServletRequest.setAttribute("phone",phone);
+        //刷新过期时间
+        redisTemplate.expire(token,1800, TimeUnit.SECONDS);
+
         filterChain.doFilter(request,response);
     }
 }

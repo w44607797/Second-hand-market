@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  **/
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/cart")
 public class ShopController {
 
     @Autowired
@@ -27,7 +27,7 @@ public class ShopController {
      * @return
      */
 
-    @GetMapping("/cart/cartList/{phone}")
+    @GetMapping("/cartList/{phone}")
     public ResponseResult GetShoppingCartList(@PathVariable String phone){
         ShoppingCartVO[] shoppingCartByPhone = cartService.getShoppingCartByPhone(phone);
         return ResponseResult.success(shoppingCartByPhone,"成功");
@@ -37,7 +37,7 @@ public class ShopController {
      * 删除购物车
      * @return
      */
-    @DeleteMapping("/api/cart/deleteCart/{skuId}")
+    @DeleteMapping("/deleteCart/{skuId}")
     public ResponseResult deleteCart(@PathVariable("skuId")String skuId,HttpServletRequest request) throws TotalException {
         String token = request.getHeader("token");
         cartService.deleteCart(token,skuId);
@@ -72,4 +72,6 @@ public class ShopController {
         cartService.changeCartStatus(skuId,isChecked);
         return ResponseResult.success();
     }
+
+
 }

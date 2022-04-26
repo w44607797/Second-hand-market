@@ -17,6 +17,9 @@ public enum StateEnum {
     USER_ERROR_ERRORFORMAT("006","数据校验出错"),
     USER_ERROR_NOLOGIN("007","用户还没有登录"),
     USER_ERROR_WRONGJWT("008","用户身份过期"),
+    USER_ERROR_HEADSHOTISNULL("009","用户上传的头像为空"),
+
+
 
     SHOP_ERROR_FAILTOADDCART("400","加购数量不能再减啦"),
     SHOP_ERROR_NOSUCHCART("401","没有对应的购物车可删除"),

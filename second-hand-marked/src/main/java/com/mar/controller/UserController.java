@@ -2,17 +2,24 @@ package com.mar.controller;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.mar.bean.dao.UserDao;
+import com.mar.bean.dto.PhotoTypeDTO;
+import com.mar.bean.dto.UrlEnum;
 import com.mar.bean.vo.ResponseResult;
 import com.mar.bean.vo.UserLoginVO;
 import com.mar.bean.vo.UserRegisterVO;
 import com.mar.exception.TotalException;
+import com.mar.service.FileService;
 import com.mar.service.RedisService;
 import com.mar.service.UserService;
+import com.mar.utils.FileUtil;
 import com.mar.utils.RedisUtils;
 import com.mar.utils.StateEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,6 +42,8 @@ public class UserController {
     RedisService redisService;
     @Autowired
     RedisUtils redisUtils;
+    @Autowired
+    FileService fileService;
 
     @PostMapping("/passport/login")
     public ResponseResult<String> userLogin(@Valid UserLoginVO userLoginVO, BindingResult bindingResult) throws TotalException {
@@ -82,7 +91,7 @@ public class UserController {
      */
 
     @GetMapping("/passport/sendCode/{phone}")
-    public ResponseResult getVertifyCode(HttpServletResponse response, @RequestAttribute String phone) throws IOException {
+    public ResponseResult getVertifyCode(HttpServletResponse response, @PathVariable String phone) throws IOException {
         LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
         OutputStream out = response.getOutputStream();
         try {
@@ -113,5 +122,46 @@ public class UserController {
             }
             return ResponseResult.failed(StateEnum.USER_ERROR_NOLOGIN.getCode(),
                     StateEnum.USER_ERROR_NOLOGIN.getMessage());
+    }
+
+    /**
+     * 用户头像上传
+     * @param
+     * @return
+     */
+    @PostMapping("/")
+    public ResponseResult userUploadFile(MultipartFile file, String phone) throws TotalException {
+        if(file==null){
+            throw new TotalException(StateEnum.USER_ERROR_HEADSHOTISNULL.getCode(),
+                    StateEnum.USER_ERROR_HEADSHOTISNULL.getMessage());
+        }
+        String fileExtension = FileUtil.getFileExtension(file);
+
+        String url = fileService.storgePhoto(file, UrlEnum.USER_HEADSHOT.getUrl(), fileExtension);
+
+
+    }
+
+    /**
+     * 获得用户头像
+     * @param
+     * @return
+     */
+
+    @GetMapping("/")
+    public ResponseResult getUserHeadShot(String phone){
+        /**
+         * 数据库查询用户头像存储地址
+         */
+        String userHeadShotUrl = userService.getUserHeadShotUrl(phone);
+        return ResponseResult.success();
+    }
+
+
+
+    @GetMapping("/demo")
+    public String demo(String phone){
+        System.out.println(phone);
+        return "测试";
     }
 }

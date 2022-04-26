@@ -3,6 +3,9 @@ package com.guo;
 import com.mar.utils.MD5Util;
 import org.junit.Test;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
+
 /**
  * @author guokaifeng
  * @createDate: 2022/4/5
