@@ -13,7 +13,7 @@ import java.util.Objects;
  * @author guokaifeng
  * @createDate: 2022/4/23
  **/
-@WebFilter(urlPatterns = {"/*"},filterName = "UserInfoFilter")
+//@WebFilter(urlPatterns = {"/*"},filterName = "UserInfoFilter")
 @Slf4j
 public class UserInfoFilter implements Filter {
 
@@ -21,12 +21,12 @@ public class UserInfoFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         CustomHttpServletRequestWrapper customHttpServletRequestWrapper = null;
-        try {
-            HttpServletRequest req = (HttpServletRequest)request;
-            customHttpServletRequestWrapper = new CustomHttpServletRequestWrapper(req);
-        }catch (Exception e){
-            log.warn("customHttpServletRequestWrapper Error:", e);
-        }
+//        try {
+//            HttpServletRequest req = (HttpServletRequest)request;
+//            customHttpServletRequestWrapper = new CustomHttpServletRequestWrapper(req);
+//        }catch (Exception e){
+//            log.warn("customHttpServletRequestWrapper Error:", e);
+//        }
         chain.doFilter((Objects.isNull(customHttpServletRequestWrapper) ? request : customHttpServletRequestWrapper), response);
     }
 }
