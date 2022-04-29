@@ -48,7 +48,6 @@ com\mar\exception\TotalException.class
 com\mar\utils\SaltUtil.class
 com\mar\filter\UserInfoFilter.class
 com\mar\config\WebAppConfig.class
-com\mar\service\FileService.class
 com\mar\bean\mapper\CategoryMapper.class
 com\mar\service\RedisService.class
 com\mar\utils\FileUtil.class

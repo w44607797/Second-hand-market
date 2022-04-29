@@ -139,11 +139,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDao> implements
     @Override
     public String uploadHeadShot(String url,String phone, MultipartFile file,String extendsion) throws IOException {
         String uuid = IdUtil.randomUUID();
-        String profilefileName = url+"/"+phone;
-        File profile = new File(profilefileName);
-        if (!profile.exists()) {
+        String profileName = url+"/"+phone+"/";
+        File profile1 = new File(url);
+        File profile2 = new File(profileName);
+
+        if (!profile1.exists() || !profile2.exists()) {
             log.info("没有存储文件夹，尝试新建");
-            if (profile.mkdirs()) {
+            if (profile1.mkdirs()) {
                 log.info("存储文件夹新建成功");
             } else {
                 log.error("存储文件夹新建失败");
@@ -151,24 +153,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDao> implements
             }
         }
 
-
         StringBuilder sb = new StringBuilder();
         sb.append(uuid);
         sb.append(".");
         sb.append(extendsion);
         String fileName = sb.toString();
         byte[] bytes = file.getBytes();
-        OutputStream outputStream = new FileOutputStream(fileName);
-        outputStream.write(bytes);
+        String allURL = profileName+fileName;
 
+        OutputStream outputStream = new FileOutputStream(allURL);
+        outputStream.write(bytes);
         UpdateWrapper<UserDao> updateWrapper = new UpdateWrapper<UserDao>();
         updateWrapper.eq("phone","17759048528");
         UserDao userDao = new UserDao();
-        userDao.setHeadshot(fileName);
+        userDao.setHeadshot(allURL);
         userMapper.update(userDao, updateWrapper);
-        return fileName;
-
-
+        return allURL;
 
     }
 
@@ -176,23 +176,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDao> implements
     public ServletOutputStream getUserHeadShotStream(String phone, ServletOutputStream outputStream) throws IOException {
 
         String userHeadShotUrl = getUserHeadShotUrl(phone);
-
-
         /**
          * 获取headshoturl
          */
-        QueryWrapper<UserDao> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("phone",phone);
-        queryWrapper.select("headshot");
-        UserDao userDao = userMapper.selectOne(queryWrapper);
-        String headshot = userDao.getHeadshot();
-        if(headshot==null){
-            return outputStream;
-        }
 
-        String URL = userHeadShotUrl+headshot;
         try {
-            InputStream fileInputStream = new FileInputStream(URL);
+            InputStream fileInputStream = new FileInputStream(userHeadShotUrl);
             int ch;
             while ((ch = fileInputStream.read()) != -1) {
                 outputStream.write(ch);
@@ -219,7 +208,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDao> implements
             //返回无头像的存储地址
             return userHeadShotUrl+"/Null";
         }
-        return userHeadShotUrl+"/"+phone;
+        return url;
     }
 
 

@@ -20,7 +20,6 @@ E:\ideaprojects\second-hand-marked\second-hand-marked\src\main\java\com\mar\bean
 E:\ideaprojects\second-hand-marked\second-hand-marked\src\main\java\com\mar\utils\MD5Util.java
 E:\ideaprojects\second-hand-marked\second-hand-marked\src\main\java\com\mar\config\RedisConfig.java
 E:\ideaprojects\second-hand-marked\second-hand-marked\src\main\java\com\mar\controller\ShopController.java
-E:\ideaprojects\second-hand-marked\second-hand-marked\src\main\java\com\mar\service\FileService.java
 E:\ideaprojects\second-hand-marked\second-hand-marked\src\main\java\com\mar\Interceptor\CustomInterceptor.java
 E:\ideaprojects\second-hand-marked\second-hand-marked\src\main\java\com\mar\service\impl\OrderServiceImpl.java
 E:\ideaprojects\second-hand-marked\second-hand-marked\src\main\java\com\mar\config\DozerBeanMapperConfigure.java

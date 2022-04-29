@@ -13,6 +13,7 @@ import com.mar.exception.TotalException;
 import com.mar.service.RedisService;
 import com.mar.service.UserService;
 import com.mar.utils.FileUtil;
+import com.mar.utils.JWTUtil;
 import com.mar.utils.RedisUtils;
 import com.mar.utils.StateEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,7 +130,7 @@ public class UserController {
      * @param
      * @return
      */
-    @PostMapping("/")
+    @PostMapping("/upload")
     public ResponseResult userUploadFile(MultipartFile file, String phone) throws TotalException, IOException {
         if(file==null){
             throw new TotalException(StateEnum.USER_ERROR_HEADSHOTISNULL.getCode(),
@@ -137,7 +138,7 @@ public class UserController {
         }
         String fileExtension = FileUtil.getFileExtension(file);
 
-        String url = userService.uploadHeadShot(UrlEnum.USER_HEADSHOT.getUrl(),phone,file,fileExtension);
+        userService.uploadHeadShot(UrlEnum.USER_HEADSHOT.getUrl(),phone,file,fileExtension);
 
         return ResponseResult.success();
     }
@@ -148,14 +149,13 @@ public class UserController {
      * @return
      */
 
-    @GetMapping("/")
+    @GetMapping("/getheadshot")
     public ResponseResult getUserHeadShot(HttpServletResponse response,String phone) throws IOException {
         /**
          * 数据库查询用户头像存储地址
          */
-        String userHeadShotUrl = userService.getUserHeadShotUrl(phone);
         ServletOutputStream outputStream = response.getOutputStream();
-        userService.getUserHeadShotStream(userHeadShotUrl,outputStream);
+        userService.getUserHeadShotStream(phone,outputStream);
         return ResponseResult.success();
     }
 
@@ -163,7 +163,9 @@ public class UserController {
 
     @GetMapping("/demo")
     public String demo(String phone){
-        System.out.println(phone);
+
+
+
         return "测试";
     }
 }
