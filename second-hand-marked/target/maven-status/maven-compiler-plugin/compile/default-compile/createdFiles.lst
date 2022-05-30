@@ -40,6 +40,7 @@ com\mar\service\impl\RedisServiceImpl.class
 com\mar\bean\vo\orderCommitVO.class
 com\mar\service\CartService.class
 com\mar\service\impl\OrderServiceImpl.class
+com\mar\controller\demoController.class
 com\mar\bean\vo\OrderListVO.class
 com\mar\service\impl\CartServiceImpl.class
 com\mar\bean\dao\UserDao.class

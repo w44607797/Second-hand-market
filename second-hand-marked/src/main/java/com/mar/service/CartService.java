@@ -14,5 +14,5 @@ public interface CartService {
     ShoppingCartVO[] getShoppingCartByPhone(String phone);
     void addToShoppingCart(String token,String skuId,String skuNum) throws TotalException;
     void deleteCart(String token,String skuId) throws TotalException;
-    void changeCartStatus(String skuId,String isChecked);
+    void changeCartStatus(String phone,String skuId,String isChecked);
 }

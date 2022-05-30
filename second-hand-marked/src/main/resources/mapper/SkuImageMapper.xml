@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mar.bean.mapper.SkuImageMapper">
+
+    <resultMap id="BaseResultMap" type="com.mar.bean.dao.SkuImage">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="skuId" column="skuId" jdbcType="BIGINT"/>
+            <result property="imgName" column="imgName" jdbcType="VARCHAR"/>
+            <result property="imgUrl" column="imgUrl" jdbcType="VARCHAR"/>
+            <result property="spuImgId" column="spuImgId" jdbcType="BIGINT"/>
+            <result property="isDefault" column="isDefault" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,skuId,imgName,
+        imgUrl,spuImgId,isDefault
+    </sql>
+    <select id="selectBySkuId" resultType="com.mar.bean.dao.SkuImage">
+        select * from sku_image where skuid=#{skuId}
+    </select>
+</mapper>

@@ -37,14 +37,13 @@ import java.io.OutputStream;
 @RequestMapping("/api/user")
 @CrossOrigin
 public class UserController {
+
     @Autowired
     UserService userService;
     @Autowired
     RedisService redisService;
     @Autowired
     RedisUtils redisUtils;
-
-
 
     @PostMapping("/passport/login")
     public ResponseResult<String> userLogin(@Valid UserLoginVO userLoginVO, BindingResult bindingResult) throws TotalException {

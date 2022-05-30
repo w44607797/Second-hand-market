@@ -1,30 +1,39 @@
 package com.mar.bean.dao;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
 import java.util.List;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-/**
- * 数据库可以建一个商品目录表
- */
-public class Category {
+import lombok.Data;
 
+/**
+ * 
+ * @TableName category
+ */
+@TableName(value ="category")
+@Data
+public class Category implements Serializable {
     /**
-     * 唯一辨识id
+     * 
      */
+    @TableId(type = IdType.AUTO)
     private Long cid;
 
+    /**
+     * 
+     */
     private Integer categoryId;
 
-    private String categoryName;
     /**
-     * 父分类id
+     * 
+     */
+    private String categoryName;
+
+    /**
+     * 
      */
     private Long parentId;
 
@@ -34,8 +43,6 @@ public class Category {
     @TableField(exist = false)
     private List<Category> categoryChild;
 
-
-
-
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
 }
-

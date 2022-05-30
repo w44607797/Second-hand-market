@@ -1,11 +1,6 @@
 package com.mar.service.impl;
 
-import cn.hutool.Hutool;
-import cn.hutool.captcha.CaptchaUtil;
-import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.util.IdUtil;
-import cn.hutool.crypto.SecureUtil;
-import cn.hutool.crypto.digest.Digester;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -19,21 +14,14 @@ import com.mar.service.RedisService;
 import com.mar.service.UserService;
 import com.mar.utils.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.management.ObjectName;
 import javax.servlet.ServletOutputStream;
-import javax.validation.Valid;
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author guokaifeng

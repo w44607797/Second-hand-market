@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mar.bean.mapper.SkuMapper">
+
+    <resultMap id="BaseResultMap" type="com.mar.bean.dao.Sku">
+            <result property="skuId" column="skuId" jdbcType="BIGINT"/>
+            <result property="spuId" column="spuId" jdbcType="BIGINT"/>
+            <result property="category3Id" column="category3Id" jdbcType="BIGINT"/>
+            <result property="stock" column="stock" jdbcType="BIGINT"/>
+            <result property="price" column="price" jdbcType="VARCHAR"/>
+            <result property="skuDefaultImg" column="skuDefaultImg" jdbcType="VARCHAR"/>
+            <result property="skuName" column="skuName" jdbcType="VARCHAR"/>
+            <result property="weight" column="weight" jdbcType="VARCHAR"/>
+            <result property="skudesc" column="skudesc" jdbcType="VARCHAR"/>
+            <result property="tmId" column="tmId" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,skuId,spuId,
+        category3Id,stock,price,
+        skuDefaultImg,skuName,weight,
+        desc_id,tmId
+    </sql>
+    <update id="updateBySkuId">
+        update sku set status=1 where skuId=#{skuId}
+    </update>
+    <delete id="deleteBySkuId">
+        delete from sku where skuId=#{skuId}
+    </delete>
+    <select id="selectBySkuId" resultType="com.mar.bean.dao.Sku">
+        select * from sku where skuId=#{skuId} and status=1
+    </select>
+    <select id="selectByCategory3Id" resultType="com.mar.bean.dao.Sku">
+        select * from sku where category3Id=#{category3Id} and status=1
+    </select>
+
+    <select id="searchByAll" resultType="com.mar.bean.dao.Sku">
+        select * from sku where skuName like #{keyword} and tmId=#{tmId} and category3Id=#{cid} and status=1
+    </select>
+
+    <select id="searchByCid" resultType="com.mar.bean.dao.Sku">
+        select * from sku where skuName like ("%" #{keyword} "%") and category3Id=#{cid} and status=1
+    </select>
+    <select id="selectExamine" resultType="com.mar.bean.dao.Sku">
+        select * from sku where status=0
+    </select>
+</mapper>

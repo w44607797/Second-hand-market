@@ -139,8 +139,19 @@ public class CartServiceImpl implements CartService {
         }
     }
 
+    /**
+     * 修改购物车选中状态
+     * key:phone:cart:skuId
+     *
+     * @param phone
+     * @param skuId
+     * @param isChecked
+     */
+
     @Override
-    public void changeCartStatus(String skuId, String isChecked) {
+    public void changeCartStatus(String phone,String skuId, String isChecked) {
+        String key = phone+":cart:"+skuId;
+        redisUtils.hPut(key,"status",isChecked);
 
     }
 }

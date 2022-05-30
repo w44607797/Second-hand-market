@@ -21,12 +21,10 @@ import lombok.NoArgsConstructor;
 public class OrderCommitDTO {
     private String id;
     private String orderId;
-
     private String skuId;
     private String skuName;
     private String imgUrl;
     private String orderPrice;
     private String skuNum;
-    private String hasStock;
 
 }

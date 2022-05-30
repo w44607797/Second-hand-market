@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mar.bean.mapper.TrademarkMapper">
+
+    <resultMap id="BaseResultMap" type="com.mar.bean.dao.Trademark">
+            <id property="tmId" column="tmId" jdbcType="BIGINT"/>
+            <result property="tmName" column="tmName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        tmId,tmName
+    </sql>
+    <select id="selectNameById" resultType="java.lang.String">
+        select tmName from trademark where tmId=#{tmId}
+    </select>
+</mapper>

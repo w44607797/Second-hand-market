@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mar.bean.mapper.SpuSaleAttrListMapper">
+
+    <resultMap id="BaseResultMap" type="com.mar.bean.dto.SpuSaleAttrList">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="spuId" column="spuId" jdbcType="BIGINT"/>
+            <result property="baseSaleAttrId" column="baseSaleAttrId" jdbcType="BIGINT"/>
+            <result property="saleAttrName" column="saleAttrName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,spuId,baseSaleAttrId,
+        saleAttrName
+    </sql>
+    <select id="selectBySpuId" resultType="com.mar.bean.dto.SpuSaleAttrList">
+        select * from spu_sale_attr where spuId=#{spuId}
+    </select>
+</mapper>

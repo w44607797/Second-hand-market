@@ -16,4 +16,5 @@ import java.util.Map;
 @Repository
 public interface CommodityMapper extends BaseMapper<UserDao> {
     Commodity getCommodityByParam(Map<String,Object> map);
+
 }

@@ -14,4 +14,5 @@ public interface RedisService {
     void setToken(String phone,String token);
     String getUserPhoneByToken(String token);
     String getUserPermissionByToken(String token);
+    String getOrderId();
 }

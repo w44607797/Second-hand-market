@@ -19,13 +19,13 @@ public enum StateEnum {
     USER_ERROR_WRONGJWT("008","用户身份过期"),
     USER_ERROR_HEADSHOTISNULL("009","用户上传的头像为空"),
 
-
+    FILE_FAILED("901","获取图片失败"),
 
     SHOP_ERROR_FAILTOADDCART("400","加购数量不能再减啦"),
     SHOP_ERROR_NOSUCHCART("401","没有对应的购物车可删除"),
 
     SERVICE_ERROR_FAILEDTOGETCODE("300","返回验证码失败"),
-
+    SERVICE_ERROR_ORDERWRONGFORMAT("301","提交的订单格式错误"),
 
     DATABASE_ERROR_MESSAGE("500","服务端出错,请联系管理员"),
     DATABASE_ERROR_FAILEDTOGETUSER("501","数据库获取用户信息出错");

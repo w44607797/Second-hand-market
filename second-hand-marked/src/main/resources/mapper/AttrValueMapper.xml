@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mar.bean.mapper.AttrValueMapper">
+
+    <resultMap id="BaseResultMap" type="com.mar.bean.dao.AttrValue">
+            <result property="attrId" column="attrId" jdbcType="BIGINT"/>
+            <result property="valueId" column="valueId" jdbcType="BIGINT"/>
+            <result property="attrValue" column="attrValue" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        attrId,valueId,attrValue
+    </sql>
+</mapper>

@@ -82,4 +82,15 @@ public class RedisServiceImpl implements RedisService {
         return (String) redisUtils.hGet(token,"permission");
     }
 
+    @Override
+    public String getOrderId() {
+        if(!redisUtils.hasKey("orderId")){
+            redisUtils.set("orderId","1");
+            redisUtils.incrBy("orderId",1L);
+            return "1";
+        }
+        redisUtils.incrBy("orderId",1L);
+        return redisUtils.get("orderId");
+    }
+
 }

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  **/
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/cart")
 public class ShopController {
 
@@ -69,7 +70,7 @@ public class ShopController {
                                             @PathVariable("isChecked") String isChecked,
                                             HttpServletRequest request){
         String phone = request.getHeader("token");
-        cartService.changeCartStatus(skuId,isChecked);
+        cartService.changeCartStatus(phone,skuId,isChecked);
         return ResponseResult.success();
     }
 

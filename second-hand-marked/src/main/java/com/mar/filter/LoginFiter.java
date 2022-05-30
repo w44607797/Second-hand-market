@@ -5,29 +5,17 @@ package com.mar.filter;
  * @createDate: 2022/4/4
  **/
 
-import com.mar.bean.vo.ResponseResult;
 import com.mar.exception.TotalException;
 import com.mar.service.RedisService;
-import com.mar.utils.RedisUtils;
 import com.mar.utils.StateEnum;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-
-import javax.annotation.Resource;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @WebFilter(urlPatterns = {"/api/user/passport/logout/*","/api/cart/*"},filterName = "LoginFiter")

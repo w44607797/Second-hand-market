@@ -2,8 +2,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: Gkfgkx123456
-    url: jdbc:mysql://sh-cynosdbmysql-grp-bfycoc5a.sql.tencentcdb.com:25809/marked?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
+    password: Ab$123456789
+    url: jdbc:mysql://sh-cynosdbmysql-grp-203oxgtu.sql.tencentcdb.com:24885/mar
 
 
 mybatis-plus:

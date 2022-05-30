@@ -34,7 +34,4 @@ public class Commodity implements Serializable {
     private String order;
     private Integer pageNo;
     private Integer pageSize;
-
-
-
 }

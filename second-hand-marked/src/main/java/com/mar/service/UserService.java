@@ -27,6 +27,4 @@ public interface UserService extends IService<UserDao> {
     String uploadHeadShot(String url, String phone, MultipartFile file,String extendsion) throws IOException;
     ServletOutputStream getUserHeadShotStream(String phone,ServletOutputStream outputStream) throws IOException;
 
-
-
 }
